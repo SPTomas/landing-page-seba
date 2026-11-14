@@ -1,120 +1,126 @@
-# Sebastián Reynoso · Identidad y página web
+# Sebastián Reynoso · Sitio profesional
 
-Sitio de Sebastián Reynoso. **Identidad elegida: azul y bronce**, con el logo de la primera propuesta y el nuevo retrato proporcionado. Las otras propuestas se conservan como exploración visual. No se modificó PagFausto ni se copiaron sus datos de contacto.
+Landing page para un abogado y profesor universitario de Córdoba. El proyecto parte de tres exploraciones visuales y evoluciona a la identidad **azul y bronce**, elegida por el cliente.
 
-Las decisiones están documentadas en [`docs/decisiones-diseno.md`](docs/decisiones-diseno.md).
+**Astro · TypeScript · CSS responsive · Playwright · axe-core**
 
-## Para mostrar ahora
+![Inicio del sitio con la identidad azul y bronce](docs/capturas/inicio-escritorio.png)
 
-- Abrir **`VER-PROPUESTAS.html`** con doble clic: presentación local, sin servidor ni internet.
-- Abrir **`PARA-MOSTRAR/00-Comparativa-general.png`** para ver las tres opciones juntas.
-- En **`PARA-MOSTRAR/`** cada propuesta tiene presentación PNG, identidad visual, vistas de escritorio/celular y logos SVG/PNG.
-- **`entrega/Sebastian-Reynoso-propuestas.zip`** reúne todo para compartir. Subir el proyecto a GitHub no despliega el sitio web.
-- Para abrir el sitio elegido, ejecutar **`INICIAR.cmd`** o `npm run mostrar`. La galería sigue disponible en `/propuestas/`.
+[Vista móvil](docs/capturas/inicio-movil.png) · [Página completa](docs/capturas/pagina-completa.png) · [Caso de estudio](docs/caso-de-estudio.md) · [Decisiones de diseño](docs/decisiones-diseno.md) · [Flujo de versionado](docs/versionado.md)
 
-### Las opciones
+## Alcance
 
-| Propuesta | Dirección | Página local |
-| --- | --- | --- |
-| 01 · Noche & bronce | Clásica, firme y elegante. Punto de partida sugerido. | <http://127.0.0.1:4322/> |
-| 02 · Marfil & oliva | Cálida, cercana, con retrato en arco. | <http://127.0.0.1:4322/oliva/> |
-| 03 · Grafito editorial | Contemporánea, geométrica, retrato en blanco y negro. | <http://127.0.0.1:4322/grafito/> |
-| Galería de propuestas | Identidades, páginas y descargas. | <http://127.0.0.1:4322/propuestas/> |
+- Identidad azul/bronce y monograma SR de la primera propuesta.
+- Retrato suministrado por el cliente, sin regeneración ni retoques. PNG conservado y WebP optimizado.
+- Perfil de abogado y profesor universitario, matrícula y jurisdicción.
+- Seis áreas: Civil, Comercial, Laboral, Familia, Concursos y Quiebras (Insolvencia), y Penal.
+- Detalles de cada área en ventanas accesibles, con selección automática en el formulario.
+- Dirección con enlace a Maps, teléfono, correo y WhatsApp.
+- Formulario validado: prepara el mensaje en WhatsApp; la persona confirma el envío en esa aplicación.
+- Navegación móvil, preguntas desplegables, privacidad, foco visible y respeto por movimiento reducido.
+- Fuentes autoalojadas, sin rastreadores, mapas embebidos ni backend.
 
-La página principal no muestra el selector de propuestas. Las alternativas lo conservan; agregar `?presentacion=1` a su URL lo oculta para una presentación limpia.
+## Datos proporcionados
 
-## Qué está funcionando
+La configuración central está en [`src/data/site.ts`](src/data/site.ts).
 
-- Tres versiones estáticas completas; navegación móvil y enlaces internos.
-- Nuevo retrato **del adjunto**, sin regenerar ni retocar. Se conserva el PNG proporcionado; la página utiliza una copia WebP optimizada, sin filtro de color en la identidad elegida. El JPG previo queda como archivo de la exploración.
-- Seis áreas con ventanas de detalle y selección automática del área de consulta.
-- Preguntas frecuentes desplegables, ventanas de privacidad, navegación por teclado y foco visible.
-- Formulario con validación y consentimiento. **Sin canal configurado no envía nada:** prepara una consulta descargable en texto, dentro del navegador. No guarda datos en almacenamiento local.
-- Tipografías autoalojadas, sin llamadas a Google Fonts, mapas ni rastreadores.
-- Tres monogramas vectoriales, logos de nombre con tipografía convertida a trazados, variantes blancas y PNG transparentes.
-- Capturas reales de las páginas, láminas de presentación, comparativa y paquete ZIP.
+| Dato | Valor |
+| --- | --- |
+| Profesional | Sebastián Reynoso · Abogado y profesor universitario |
+| Matrícula | Matrícula Provincial 1-42921 |
+| Jurisdicción | Primera Circunscripción Judicial de la Provincia de Córdoba |
+| Estudio | Juan del Campillo 747, barrio Cofico, Córdoba |
+| Teléfono / WhatsApp | 351 530-7287 · Internacional: +54 9 351 530-7287 |
+| Correo | reinososebastian8@gmail.com |
 
-Las láminas de identidad son exploraciones conceptuales generadas con asistencia de IA. Los SVG se dibujaron y compusieron para la web: **son interpretaciones, no reproducciones exactas de los logos de los mockups**. En el mockup grafito se reemplazó la tarjeta con datos ficticios por una aplicación neutra del logo real.
+No se atribuyen instituciones académicas, cátedras, antigüedad, reseñas ni resultados no proporcionados. Los honorarios y la modalidad de cada consulta se coordinan con el profesional.
 
-## Instalación y comandos
+## Desarrollo local
 
-Requiere **Node.js 22.12+**. Probado con Node 22.14.0 en Windows. El servidor está limitado a `127.0.0.1`, puerto **4322**, para no interferir con PagFausto.
+Requiere **Node.js 22.12+**. El servidor se limita a `127.0.0.1:4322`.
 
-```powershell
-npm install
+```sh
+npm ci
 npm run dev
 ```
 
+Abrir <http://127.0.0.1:4322/>. En Windows también se puede usar `INICIAR.cmd` o `npm run mostrar`.
+
+## Validación
+
+```sh
+npm run check
+npm run build
+npm run preview
+```
+
+Con el servidor activo, en otra terminal:
+
+```sh
+npm test
+npm run capturas
+```
+
+Las pruebas cubren la identidad elegida, el retrato, los datos profesionales, las seis áreas y sus ventanas, adaptación de 320 a 1440 px, menú móvil, privacidad y formularios. WhatsApp se intercepta localmente; no se envían mensajes de prueba a servicios reales. También se comprueban la descarga sin canales configurados, errores/éxito de un endpoint simulado y accesibilidad automática WCAG A/AA con axe-core. Estas comprobaciones no sustituyen una auditoría manual completa.
+
+Las pruebas y capturas utilizan Edge o Chrome instalados. Si no hay un navegador disponible:
+
+```sh
+npx playwright install chromium
+```
+
+Se admiten las variables `BROWSER_PATH` y `SITE_URL`. `unifont` se fija en `0.7.4` para mantener la compatibilidad con Node 22.14. Las fuentes de la web se importan desde Fontsource.
+
+## Comandos
+
 | Comando | Función |
 | --- | --- |
-| `npm run mostrar` | Inicia la web elegida; reutiliza el servidor si ya está activo. |
+| `npm run mostrar` | Inicia el sitio elegido y abre el navegador. |
 | `npm run check` | Revisa Astro y TypeScript. |
-| `npm run build` | Genera el sitio estático en `dist/`. |
-| `npm run preview` | Sirve la compilación en el puerto 4322. |
-| `npm test` | Pruebas de navegador, adaptación, formularios, descargas y accesibilidad automática. Requiere servidor activo. |
-| `npm run logos` | Regenera los seis SVG con textos convertidos a trazados. |
-| `npm run exportar` | Exporta capturas y presentaciones. Requiere servidor activo. |
-| `npm run entrega` | Regenera la carpeta de presentación y el ZIP. Requiere Python. |
+| `npm run build` | Compila el sitio estático en `dist/`. |
+| `npm run preview` | Sirve la compilación localmente. |
+| `npm test` | Ejecuta pruebas de navegador y accesibilidad. Requiere servidor. |
+| `npm run capturas` | Guarda capturas actuales en `docs/capturas/`. Requiere servidor. |
+| `npm run logos` | Regenera los SVG con textos convertidos a trazados. |
+| `npm run exportar` | Reexporta las presentaciones de las tres propuestas. Requiere servidor. |
+| `npm run entrega` | Empaqueta las láminas de propuestas. Requiere Python. |
 
-Las pruebas y exportaciones utilizan Microsoft Edge o Chrome ya instalados. Si no están disponibles, ejecutar `npx playwright install chromium`. Se puede indicar otro navegador con `BROWSER_PATH` y otro servidor con `SITE_URL`.
+## Formulario y privacidad
 
-`unifont` se fija en `0.7.4` mediante `overrides` para mantener compatibilidad con Node 22.14; `0.7.5` requiere una versión de Node posterior por su dependencia de Undici. No se utiliza el servicio de fuentes de Astro: todas las fuentes se importan desde Fontsource. El lockfile incluye las versiones auditadas.
+Prioridad de canales: `formEndpoint` → WhatsApp → correo → descarga local. Actualmente se utiliza **WhatsApp**, sin endpoint ni backend.
 
-### Regenerar las imágenes
+El formulario no almacena datos en el navegador y no anuncia un envío completado al abrir WhatsApp. La ventana de privacidad identifica al profesional, su domicilio y el correo para solicitudes sobre datos. Los enlaces a WhatsApp y teléfono siguen disponibles sin JavaScript.
 
-Las imágenes entregadas ya están listas. Sólo hace falta este flujo si se cambia el diseño:
+`src/data/site.ts` es público en la compilación: **nunca colocar secretos allí**. Los archivos `.env` se excluyen de Git.
 
-1. `npm run logos`
-2. `python scripts/prepare-assets.py` (requiere Pillow; prepara WebP, fuentes/licencias y sanea el mockup grafito si ya existe el PNG del logo).
-3. Iniciar el servidor en otra terminal: `npm run dev`.
-4. `npm run exportar`
-5. Si fuera la primera exportación: `python scripts/prepare-assets.py` y luego `npm run exportar` nuevamente, para que la comparativa incluya el mockup sin datos ficticios.
-6. `npm run entrega`
-7. `npm run build` para que `dist/` incluya las últimas exportaciones.
+## Archivo de propuestas
 
-## Antes de publicar: datos pendientes
+Las exploraciones iniciales se conservan para documentar el proceso:
 
-Editar **`src/data/site.ts`**:
+- `/propuestas/`: galería; `/oliva/` y `/grafito/`: alternativas navegables.
+- `VER-PROPUESTAS.html`: presentación local sin servidor.
+- `PARA-MOSTRAR/` y `entrega/Sebastian-Reynoso-propuestas.zip`: láminas y logos iniciales.
 
-```ts
-export const site = {
-  name: 'Sebastián Reynoso',
-  profession: 'Abogado',
-  whatsapp: '', // Formato internacional, sólo dígitos.
-  email: '',
-  address: '',
-  registration: '',
-  formEndpoint: '',
-};
-```
+Las capturas y el ZIP de esa etapa pueden mostrar el retrato y los textos anteriores. **Las capturas actuales están en `docs/capturas/`.** La página elegida no muestra el selector de propuestas; las alternativas sí. `?presentacion=1` oculta los controles de presentación.
 
-Prioridad de envío: `formEndpoint` → WhatsApp → correo → descarga local. En WhatsApp/correo se prepara el mensaje y el usuario confirma el envío en esa aplicación. Un endpoint sólo muestra éxito después de recibir una respuesta HTTP satisfactoria. No colocar secretos en esta configuración, que se incluye en el navegador.
+Los mockups de identidad son exploraciones con asistencia de IA. Los SVG son interpretaciones vectoriales adaptadas, no calcos exactos de esos mockups. No se modificó PagFausto ni se copiaron sus datos.
 
-**Validar con Sebastián antes de publicar:**
+Para regenerar recursos: `npm run logos`, `python scripts/prepare-assets.py` (requiere Pillow), servidor activo, `npm run exportar` y `npm run entrega`. Este flujo actualiza las láminas de exploración; no es necesario para compilar el sitio elegido.
 
-- Condición profesional, matrícula, jurisdicción y áreas reales de práctica. Los textos y las seis áreas son **propuestos**, no antecedentes o especialidades verificados.
-- Modalidad de atención y datos de contacto. No se inventaron teléfono, dirección, correo, experiencia, reseñas ni resultados.
-- Honorarios y condiciones de la primera consulta; no se promete gratuidad, plazos o resultados.
-- Responsable del tratamiento de datos, canal para ejercer derechos y conservación. La ventana de privacidad es una base para la propuesta, no una política definitiva.
-- Elegir una identidad y retirar la galería/selector si no se desean públicos.
-- Definir dominio, metadatos sociales y acceso a las imágenes de la foto, según corresponda.
+## Versionado
 
-Por ahora todas las páginas incluyen **`noindex,nofollow`** y `public/robots.txt` bloquea rastreadores. Retirar esas restricciones sólo al confirmar la versión pública y revisar los textos. Para publicar alcanza con desplegar el contenido de `dist/` en un alojamiento estático; no hay backend ni envío configurado.
+Cambios separados por responsabilidad:
 
-## Estructura
+| Rama | Alcance |
+| --- | --- |
+| `feat/identidad-azul-bronce` | Identidad elegida, retrato y navegación principal. |
+| `feat/perfil-profesional` | Datos confirmados, áreas, docencia, contacto y pruebas. |
+| `docs/caso-de-estudio` | Documentación del proceso y capturas para portfolio. |
 
-```text
-src/components/Site.astro     Página compartida de las tres identidades
-src/components/Mark.astro     Monogramas utilizados en la web
-src/data/site.ts              Datos, propuestas, áreas y preguntas
-src/styles/global.css        Estilos, temas y adaptación
-src/scripts/site.ts          Menú, ventanas y formulario
-src/pages/                   Páginas de cada versión y galería
-public/images/               Foto original y WebP
-public/logos/                SVG vectoriales y blancos
-public/propuestas/           Identidades, capturas y láminas PNG
-public/fonts/                Fuentes para las láminas y licencias OFL
-scripts/                     Pruebas, exportaciones y empaquetado
-PARA-MOSTRAR/                 Archivos ordenados para presentar
-entrega/                     ZIP para compartir
-```
+Se integran a `main` mediante merges `--no-ff`, conservando los commits por tema. Ver [`docs/versionado.md`](docs/versionado.md).
+
+## Publicación
+
+El código está en GitHub; eso **no despliega el sitio**. `npm run build` genera `dist/`, apto para alojamiento estático.
+
+Hasta definir el dominio y confirmar la revisión final, se conservan `noindex,nofollow` y el bloqueo de `public/robots.txt`. Antes del lanzamiento hay que configurar dominio/metadatos y revisar la información de privacidad, incluida la conservación de consultas en los canales externos. Las alternativas deben permanecer fuera de la indexación.
