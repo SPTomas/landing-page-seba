@@ -1,11 +1,15 @@
-// Completar estos datos con Sebastián antes de publicar. No se usan datos de Fausto.
+// Datos proporcionados por Sebastián. Esta configuración se incluye en el navegador.
 export const site = {
   name: 'Sebastián Reynoso',
   profession: 'Abogado',
-  whatsapp: '', // Formato internacional, solo dígitos: 549...
-  email: '',
-  address: '',
-  registration: '',
+  academicRole: 'Profesor universitario',
+  whatsapp: '5493515307287',
+  telephone: '+5493515307287',
+  phoneDisplay: '351 530-7287',
+  email: 'reinososebastian8@gmail.com',
+  address: 'Juan del Campillo 747, barrio Cofico, Córdoba',
+  registration: 'Matrícula Provincial 1-42921',
+  jurisdiction: 'Primera Circunscripción Judicial de la Provincia de Córdoba',
   formEndpoint: '', // Endpoint propio o de Formspree. Nunca guardar claves privadas acá.
 };
 
@@ -41,19 +45,19 @@ export const themes = {
 
 export type Theme = keyof typeof themes;
 
-// Áreas propuestas para la maqueta; validar alcance y especialidades antes de publicar.
+// Áreas confirmadas por el profesional; el alcance se evalúa en cada consulta.
 export const services = [
-  { id: 'civil', title: 'Civil y comercial', icon: 'document', description: 'Contratos, alquileres y reclamos. Asesoramiento para cuidar tus intereses y anticiparte a los conflictos.', detail: 'Orientación en la redacción y revisión de contratos, conflictos de alquiler, responsabilidad civil y reclamos por daños y perjuicios. La consulta permite evaluar los antecedentes y las alternativas aplicables a tu situación.', examples: ['Revisión y redacción de contratos', 'Alquileres y relaciones comerciales', 'Daños y perjuicios'] },
+  { id: 'civil', title: 'Derecho civil', icon: 'document', description: 'Contratos, alquileres, sucesiones y reclamos. Asesoramiento para cuidar tus derechos y tu patrimonio.', detail: 'Orientación en conflictos de alquiler, contratos civiles, sucesiones y responsabilidad por daños. La consulta permite revisar la documentación, comprender los antecedentes y evaluar las alternativas para cada situación.', examples: ['Contratos y alquileres', 'Sucesiones', 'Responsabilidad civil y daños'] },
+  { id: 'comercial', title: 'Derecho comercial', icon: 'building', description: 'Respaldo jurídico para tu actividad comercial. Contratos, relaciones empresariales y prevención de conflictos.', detail: 'Asesoramiento en las relaciones jurídicas de la actividad comercial, la revisión de contratos y los conflictos entre empresas o comerciantes. El trabajo se organiza según las necesidades y características de cada actividad.', examples: ['Contratos comerciales', 'Asesoramiento a empresas y comerciantes', 'Conflictos en la actividad comercial'] },
   { id: 'laboral', title: 'Derecho laboral', icon: 'briefcase', description: 'Despidos, condiciones de trabajo y derechos laborales. Claridad sobre tus alternativas y próximos pasos.', detail: 'Análisis de conflictos en la relación de trabajo, desvinculaciones, diferencias salariales y accidentes laborales. Antes de enviar un telegrama o firmar un acuerdo, es importante conocer su alcance.', examples: ['Despidos y diferencias salariales', 'Trabajo no registrado', 'Accidentes de trabajo y ART'] },
   { id: 'familia', title: 'Derecho de familia', icon: 'people', description: 'Acompañamiento en decisiones personales importantes, con una mirada respetuosa y enfocada en el diálogo.', detail: 'Asesoramiento en procesos de divorcio, acuerdos familiares, alimentos y organización del cuidado de hijos e hijas. Cada caso se aborda con especial atención a la situación de las personas involucradas.', examples: ['Divorcios y acuerdos', 'Cuota alimentaria', 'Cuidado personal y comunicación'] },
-  { id: 'sucesiones', title: 'Sucesiones', icon: 'branch', description: 'Orientación para ordenar el patrimonio familiar y transitar cada etapa del proceso sucesorio.', detail: 'Asistencia para identificar la documentación necesaria, analizar la situación de los bienes y orientar el proceso sucesorio. Los pasos y plazos dependen de las circunstancias de cada familia y jurisdicción.', examples: ['Declaratoria de herederos', 'Sucesiones con o sin testamento', 'Partición y adjudicación de bienes'] },
+  { id: 'insolvencia', title: 'Concursos y quiebras (Insolvencia)', icon: 'branch', description: 'Orientación ante dificultades económicas. Análisis de deudas, alternativas concursales y derechos de los acreedores.', detail: 'Asesoramiento a personas y empresas en situaciones de insolvencia, concursos preventivos y quiebras, así como a acreedores que necesitan hacer valer sus derechos. Cada consulta requiere evaluar la situación patrimonial y las herramientas legales aplicables, sin prometer resultados.', examples: ['Evaluación de situaciones de insolvencia', 'Concursos preventivos y quiebras', 'Verificación de créditos y derechos de acreedores'] },
   { id: 'penal', title: 'Derecho penal', icon: 'shield', description: 'Asesoramiento y defensa de tus derechos, con atención a los detalles y a las particularidades de cada caso.', detail: 'Evaluación de consultas relacionadas con denuncias, investigaciones y procesos penales. La intervención y el alcance de la representación se acuerdan luego de analizar el caso y la jurisdicción correspondiente.', examples: ['Orientación ante denuncias', 'Defensa y representación', 'Asistencia a víctimas'] },
-  { id: 'accidentes', title: 'Accidentes de tránsito', icon: 'car', description: 'Reclamos por daños y lesiones. Evaluación de tu situación y de las vías para solicitar una reparación.', detail: 'Asesoramiento sobre documentación del siniestro, gestiones ante aseguradoras y evaluación de daños materiales o lesiones. Es conveniente conservar fotografías, constancias médicas y datos de las personas involucradas.', examples: ['Reclamos ante aseguradoras', 'Daños materiales y lesiones', 'Evaluación de acuerdos'] },
 ] as const;
 
 export const faqs = [
   { question: '¿Cómo es la primera consulta?', answer: 'Es un espacio para escuchar tu situación, revisar los antecedentes y entender qué necesitás. A partir de esa información, se evalúan las alternativas legales y los pasos posibles. Las condiciones y honorarios de la consulta se acuerdan previamente.' },
-  { question: '¿Puedo consultar de manera online?', answer: 'La propuesta contempla consultas a distancia, con coordinación previa. La modalidad y la posibilidad de intervenir en tu caso se confirman según el tipo de asunto y la jurisdicción.' },
+  { question: '¿Dónde puedo realizar una consulta?', answer: `El estudio está en ${site.address}. Escribime por WhatsApp al ${site.phoneDisplay} o a ${site.email} para coordinar tu consulta y acordar la modalidad de atención.` },
   { question: '¿Qué documentación necesito?', answer: 'Depende del motivo de tu consulta. Para empezar, prepará un resumen de lo ocurrido, las fechas importantes y los documentos o comunicaciones relacionados. No envíes documentación sensible hasta acordar un canal adecuado.' },
   { question: '¿Cómo se acuerdan los honorarios?', answer: 'Los honorarios se informan y acuerdan antes de comenzar el trabajo, según el alcance de la intervención y la normativa aplicable. La idea es que sepas qué incluye el servicio y puedas decidir con información.' },
 ];

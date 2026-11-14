@@ -7,6 +7,8 @@ interface Props { theme?: Theme; preview?: boolean }
 const { theme = 'noche', preview = false } = Astro.props;
 const identity = themes[theme];
 const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.email);
+const submitLabel = site.formEndpoint ? 'Enviar mi consulta' : site.whatsapp ? 'Continuar por WhatsApp' : site.email ? 'Preparar correo' : 'Preparar mi consulta';
+const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address}, Argentina`)}`;
 ---
 <Layout theme={theme} preview={preview}>
   <header class="site-header">
@@ -31,15 +33,16 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow"><span class="short-line"></span> Asesoramiento jurídico personalizado</p>
+          <p class="hero-role">{site.profession} <span aria-hidden="true">·</span> {site.academicRole}</p>
           <h1 id="hero-title">{identity.headline.map((line, index) => <><span class:list={[index === 2 && 'accent-word']}>{index === 2 && theme !== 'grafito' ? <em>{line}</em> : line}</span>{index < 2 && <br />}</>)}</h1>
           <p class="hero-description">Cada situación tiene una historia.<br class="desktop-break" /> Te escucho, te asesoro y te acompaño con una estrategia pensada para vos.</p>
           <div class="hero-actions"><a href="#contacto" class="button button-primary">Hablemos de tu caso <Icon name="arrow" size={18} /></a><a href="#areas" class="text-link">Cómo puedo ayudarte <span>↓</span></a></div>
-          <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="check" size={14} /> Compromiso con tu caso</span></div>
+          <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="pin" size={14} /> Cofico · Córdoba</span></div>
         </div>
         <figure class="hero-portrait">
           <div class="portrait-photo"><img src="/images/sebastian-reynoso.webp" width="768" height="1152" alt="Sebastián Reynoso, de traje azul y anteojos" loading="eager" fetchpriority="high" /></div>
           <span class="portrait-side-label" aria-hidden="true">ESCUCHA. ESTRATEGIA. COMPROMISO.</span>
-          <figcaption><span class="caption-line"></span><div><strong>Sebastián Reynoso</strong><small>ABOGADO · ASESORAMIENTO INTEGRAL</small></div><Icon name="arrow" size={22} /></figcaption>
+          <figcaption><span class="caption-line"></span><div><strong>{site.name}</strong><small>ABOGADO · PROFESOR UNIVERSITARIO</small></div><Icon name="arrow" size={22} /></figcaption>
           <div class="portrait-stamp" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id={`seal-${theme}`} d="M50,50m-38,0a38,38 0 1,1 76,0a38,38 0 1,1-76,0" /></defs><text><textPath href={`#seal-${theme}`} textLength="238">CERCANÍA · CLARIDAD · COMPROMISO · </textPath></text></svg><Mark theme={theme} /></div>
         </figure>
       </div>
@@ -48,13 +51,27 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
 
     <section id="estudio" class="about section-space" aria-labelledby="about-title">
       <div class="container about-grid">
-        <div class="about-copy"><p class="eyebrow">01 <span class="short-line"></span> El estudio</p><h2 id="about-title">Detrás de cada caso,<br />hay una <em>persona.</em></h2><p class="body-copy">Soy Sebastián Reynoso. Creo en una forma de ejercer el derecho que empieza por escuchar y se construye con confianza.</p><p class="body-copy">Mi compromiso es que entiendas dónde estás, qué alternativas tenés y cómo podemos avanzar. Con un trato cercano, información clara y la atención que tu situación merece.</p><a href="#contacto" class="text-link ink-link">Conversemos sobre tu situación <Icon name="arrow" size={16} /></a></div>
+        <div class="about-copy">
+          <p class="eyebrow">01 <span class="short-line"></span> El estudio</p>
+          <h2 id="about-title">Detrás de cada caso,<br />hay una <em>persona.</em></h2>
+          <p class="body-copy">Soy {site.name}, abogado y profesor universitario en Córdoba. Creo en una forma de ejercer el derecho que empieza por escuchar y se construye con confianza.</p>
+          <p class="body-copy">Mi compromiso es que entiendas dónde estás, qué alternativas tenés y cómo podemos avanzar. Con un trato cercano, información clara y la atención que tu situación merece.</p>
+          <dl class="professional-credentials"><div><dt>Habilitación profesional</dt><dd>{site.registration}</dd></div><div><dt>Jurisdicción</dt><dd>{site.jurisdiction}</dd></div></dl>
+          <a href="#contacto" class="text-link ink-link">Conversemos sobre tu situación <Icon name="arrow" size={16} /></a>
+        </div>
         <div class="values-list">
           <article><span class="value-number">01 /</span><div><h3>Escucha y cercanía</h3><p>Tu consulta no es un expediente más. Es el punto de partida para entender lo que realmente necesitás.</p></div><Icon name="people" size={25} /></article>
           <article><span class="value-number">02 /</span><div><h3>Claridad en cada paso</h3><p>Sin vueltas ni palabras difíciles. Información transparente para que puedas decidir con tranquilidad.</p></div><Icon name="document" size={25} /></article>
           <article><span class="value-number">03 /</span><div><h3>Una estrategia para vos</h3><p>Cada historia es distinta. El camino legal también debe responder a tus necesidades y prioridades.</p></div><Icon name="branch" size={25} /></article>
           <div class="signature">Sebastián Reynoso <span>Abogado</span></div>
         </div>
+      </div>
+      <div class="container">
+        <article class="academic-profile" aria-labelledby="academic-title">
+          <div class="academic-icon"><Icon name="academic" size={36} /></div>
+          <div><p class="eyebrow">Ejercicio profesional & docencia</p><h3 id="academic-title">El derecho también <em>se enseña.</em></h3><p>Como profesor universitario, comparto una forma de entender el derecho que pone en el centro el análisis y la claridad. Esa misma vocación de explicar y escuchar acompaña mi práctica profesional.</p></div>
+          <span class="academic-label">ABOGADO<br />& PROFESOR UNIVERSITARIO</span>
+        </article>
       </div>
     </section>
 
@@ -84,16 +101,27 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
 
     <section id="contacto" class="contact section-space" aria-labelledby="contact-title">
       <div class="container contact-grid">
-        <div class="contact-copy"><p class="eyebrow">04 <span class="short-line"></span> Hablemos</p><h2 id="contact-title">El primer paso<br />es <em>conversar.</em></h2><p class="body-copy">Contame qué te preocupa.<br />Busquemos juntos cómo avanzar.</p><div class="contact-methods"><div><Icon name="chat" size={22} /><span>Atención personalizada<small>Trato directo con el profesional a cargo.</small></span></div><div><Icon name="globe" size={22} /><span>Consultas online{site.address ? ' y presenciales' : ''}<small>Con coordinación previa.</small></span></div>{site.address && <div><Icon name="pin" size={22} /><span>{site.address}</span></div>}{site.email && <a href={`mailto:${site.email}`}><Icon name="mail" size={22} /><span>{site.email}</span></a>}{site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer"><Icon name="chat" size={22} /><span>Escribime por WhatsApp <small>Abrir conversación ↗</small></span></a>}</div><p class="confidential-note"><Icon name="shield" size={17} /> Tu información se trata con respeto y confidencialidad.</p></div>
+        <div class="contact-copy">
+          <p class="eyebrow">04 <span class="short-line"></span> Hablemos</p><h2 id="contact-title">El primer paso<br />es <em>conversar.</em></h2>
+          <p class="body-copy">Contame qué te preocupa.<br />Busquemos juntos cómo avanzar.</p>
+          <div class="contact-methods">
+            <div><Icon name="chat" size={22} /><span>Atención personalizada<small>Consultas con coordinación previa.</small></span></div>
+            {site.address && <a href={mapURL} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={22} /><span>{site.address}<small>Ver ubicación en Google Maps ↗</small></span></a>}
+            {site.telephone && <a href={`tel:${site.telephone}`}><Icon name="phone" size={22} /><span>{site.phoneDisplay}<small>Llamar al estudio</small></span></a>}
+            {site.email && <a href={`mailto:${site.email}`}><Icon name="mail" size={22} /><span>{site.email}<small>Enviar un correo</small></span></a>}
+            {site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer"><Icon name="chat" size={22} /><span>Escribime por WhatsApp<small>{site.phoneDisplay} · Abrir conversación ↗</small></span></a>}
+          </div>
+          <p class="confidential-note"><Icon name="shield" size={17} /> Tu información se trata con respeto y confidencialidad.</p>
+        </div>
         <form id="contact-form" class="contact-form" method="post" action="#contacto" data-endpoint={site.formEndpoint} data-whatsapp={site.whatsapp} data-email={site.email}>
-          <h3>Contame tu consulta</h3><p class="form-intro">Completá estos datos para dar el primer paso.</p>
+          <h3>Contame tu consulta</h3><p class="form-intro">{!site.formEndpoint && site.whatsapp ? 'Completá estos datos. Se abrirá WhatsApp con tu consulta preparada y confirmás el envío allí.' : 'Completá estos datos para dar el primer paso.'}</p>
           <div class="form-row"><label>Nombre y apellido <span>*</span><input name="nombre" autocomplete="name" placeholder="Tu nombre" required maxlength="100" /></label><label>Correo electrónico <span>*</span><input type="email" name="email" autocomplete="email" placeholder="vos@ejemplo.com" required maxlength="180" /></label></div>
           <label>¿Sobre qué querés consultar?<select name="area" id="contact-area"><option value="Consulta general">Seleccioná un área</option>{services.map(service => <option value={service.title}>{service.title}</option>)}<option value="Otra consulta">Otra consulta</option></select></label>
           <label>Tu consulta <span>*</span><textarea name="mensaje" placeholder="Contame brevemente tu situación…" required minlength="10" maxlength="3000" rows="4"></textarea></label>
           <label class="consent"><input type="checkbox" name="consentimiento" required /><span>Leí la <button type="button" class="privacy-trigger">información de privacidad</button> y acepto el tratamiento de estos datos para gestionar mi consulta.</span></label>
           <div class="form-honeypot" aria-hidden="true"><label>No completar<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-          <button type="submit" class="button button-form" disabled>{contactConfigured ? 'Enviar mi consulta' : 'Preparar mi consulta'} <Icon name="arrow" size={18} /></button>
-          <noscript><p class="demo-note">Activá JavaScript para preparar tu consulta. Este formulario no envía datos sin esa función.</p></noscript>
+          <button type="submit" class="button button-form" disabled>{submitLabel} <Icon name="arrow" size={18} /></button>
+          <noscript><p class="demo-note">Activá JavaScript para preparar tu consulta, o usá los enlaces de WhatsApp, teléfono y correo del estudio.</p></noscript>
           {!contactConfigured && <p class="demo-note">Vista de propuesta: podés preparar y descargar tu consulta. El envío se habilita al configurar los datos de contacto.</p>}
           <div class="form-status" role="status" aria-live="polite"></div><a id="download-consultation" class="text-link ink-link" hidden download="consulta-sebastian-reynoso.txt">Descargar mi consulta <Icon name="download" size={17} /></a>
         </form>
@@ -107,7 +135,14 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
   {preview && <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>}
 
   <dialog id="service-dialog" class="site-dialog"><button type="button" class="dialog-close" aria-label="Cerrar detalle del área"><Icon name="close" size={22} /></button><p class="eyebrow">Áreas de práctica</p><h2 id="service-dialog-title"></h2><p class="dialog-description"></p><ul class="dialog-examples"></ul><a href="#contacto" class="button button-form dialog-contact">Consultar sobre esta área <Icon name="arrow" size={17} /></a><p class="dialog-disclaimer">El alcance de la intervención se confirma luego de evaluar cada caso.</p></dialog>
-  <dialog id="privacy-dialog" class="site-dialog privacy-dialog" aria-labelledby="privacy-title"><button type="button" class="dialog-close" aria-label="Cerrar información de privacidad"><Icon name="close" size={22} /></button><p class="eyebrow">Tu información</p><h2 id="privacy-title">Privacidad y contacto</h2><p>Los datos solicitados se utilizan exclusivamente para preparar o gestionar tu consulta. No incluyas datos sensibles, documentación médica o información de terceros en este formulario.</p>{!contactConfigured ? <p><strong>Esta es una propuesta de diseño.</strong> No se envían datos a ningún servidor. La consulta se prepara en tu navegador y se puede descargar como archivo de texto.</p> : <p>Según el canal configurado, la consulta se enviará al servicio de formularios indicado, o se abrirá tu aplicación de correo o WhatsApp para que confirmes el envío. Esos servicios aplican sus propias políticas de privacidad.</p>}<p>Completar el formulario no establece por sí solo una relación profesional ni confirma la aceptación de un caso. Antes de publicar, deben completarse los datos del responsable, el canal para ejercer derechos sobre los datos y los plazos de conservación.</p></dialog>
+  <dialog id="privacy-dialog" class="site-dialog privacy-dialog" aria-labelledby="privacy-title">
+    <button type="button" class="dialog-close" aria-label="Cerrar información de privacidad"><Icon name="close" size={22} /></button>
+    <p class="eyebrow">Tu información</p><h2 id="privacy-title">Privacidad y contacto</h2>
+    <p>Los datos solicitados se utilizan para preparar o gestionar tu consulta. No incluyas datos sensibles, documentación médica o información de terceros en este formulario.</p>
+    {!contactConfigured ? <p>No se envían datos a ningún servidor. La consulta se prepara en tu navegador y se puede descargar como archivo de texto.</p> : site.formEndpoint ? <p>La consulta se enviará al servicio de formularios configurado para su gestión. No envíes información sensible por este medio.</p> : <p>El mensaje se prepara en tu navegador. Al continuar se abre WhatsApp o tu aplicación de correo y confirmás el envío allí. Esos servicios aplican sus propias políticas de privacidad. Este sitio no almacena el contenido del formulario ni utiliza analítica o rastreadores.</p>}
+    <p>El responsable de la atención de las consultas es {site.name}, {site.registration}, con domicilio profesional en {site.address}. Podés solicitar acceso, rectificación o eliminación de tus datos escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>. El tratamiento posterior de una consulta se acuerda en el marco de la atención profesional.</p>
+    <p>Completar el formulario no establece por sí solo una relación profesional ni confirma la aceptación de un caso.</p>
+  </dialog>
   <script define:vars={{ serviceData: services }}>window.__services = serviceData;</script>
   <script src="../scripts/site.ts"></script>
 </Layout>
