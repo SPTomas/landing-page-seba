@@ -1,6 +1,6 @@
 // Datos proporcionados por Sebastián. Esta configuración se incluye en el navegador.
 export const site = {
-  name: 'Sebastián Reynoso',
+  name: 'Sebastián Reinoso',
   profession: 'Abogado',
   academicRole: 'Profesor universitario',
   whatsapp: '5493515307287',

@@ -13,9 +13,9 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
 <Layout theme={theme} preview={preview}>
   <header class="site-header">
     <div class="container nav-inner">
-      <a href="#inicio" class="brand" aria-label="Sebastián Reynoso, inicio">
+      <a href="#inicio" class="brand" aria-label={`${site.name}, inicio`}>
         <Mark theme={theme} />
-        <span class="brand-name">Sebastián Reynoso<small>ABOGADO</small></span>
+        <span class="brand-name">{site.name}<small>ABOGADO</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#estudio">El estudio</a><a href="#areas">Áreas de práctica</a><a href="#proceso">Cómo trabajamos</a>
@@ -40,7 +40,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="pin" size={14} /> Cofico · Córdoba</span></div>
         </div>
         <figure class="hero-portrait">
-          <div class="portrait-photo"><img src="/images/sebastian-reynoso.webp" width="768" height="1152" alt="Sebastián Reynoso, de traje azul y anteojos" loading="eager" fetchpriority="high" /></div>
+          <div class="portrait-photo"><img src="/images/sebastian-reinoso.webp" width="768" height="1152" alt={`${site.name}, de traje azul y anteojos`} loading="eager" fetchpriority="high" /></div>
           <span class="portrait-side-label" aria-hidden="true">ESCUCHA. ESTRATEGIA. COMPROMISO.</span>
           <figcaption><span class="caption-line"></span><div><strong>{site.name}</strong><small>ABOGADO · PROFESOR UNIVERSITARIO</small></div><Icon name="arrow" size={22} /></figcaption>
           <div class="portrait-stamp" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id={`seal-${theme}`} d="M50,50m-38,0a38,38 0 1,1 76,0a38,38 0 1,1-76,0" /></defs><text><textPath href={`#seal-${theme}`} textLength="238">CERCANÍA · CLARIDAD · COMPROMISO · </textPath></text></svg><Mark theme={theme} /></div>
@@ -63,7 +63,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           <article><span class="value-number">01 /</span><div><h3>Escucha y cercanía</h3><p>Tu consulta no es un expediente más. Es el punto de partida para entender lo que realmente necesitás.</p></div><Icon name="people" size={25} /></article>
           <article><span class="value-number">02 /</span><div><h3>Claridad en cada paso</h3><p>Sin vueltas ni palabras difíciles. Información transparente para que puedas decidir con tranquilidad.</p></div><Icon name="document" size={25} /></article>
           <article><span class="value-number">03 /</span><div><h3>Una estrategia para vos</h3><p>Cada historia es distinta. El camino legal también debe responder a tus necesidades y prioridades.</p></div><Icon name="branch" size={25} /></article>
-          <div class="signature">Sebastián Reynoso <span>Abogado</span></div>
+          <div class="signature">{site.name} <span>Abogado</span></div>
         </div>
       </div>
       <div class="container">
@@ -113,7 +113,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           </div>
           <p class="confidential-note"><Icon name="shield" size={17} /> Tu información se trata con respeto y confidencialidad.</p>
         </div>
-        <form id="contact-form" class="contact-form" method="post" action="#contacto" data-endpoint={site.formEndpoint} data-whatsapp={site.whatsapp} data-email={site.email}>
+        <form id="contact-form" class="contact-form" method="post" action="#contacto" data-professional={site.name} data-endpoint={site.formEndpoint} data-whatsapp={site.whatsapp} data-email={site.email}>
           <h3>Contame tu consulta</h3><p class="form-intro">{!site.formEndpoint && site.whatsapp ? 'Completá estos datos. Se abrirá WhatsApp con tu consulta preparada y confirmás el envío allí.' : 'Completá estos datos para dar el primer paso.'}</p>
           <div class="form-row"><label>Nombre y apellido <span>*</span><input name="nombre" autocomplete="name" placeholder="Tu nombre" required maxlength="100" /></label><label>Correo electrónico <span>*</span><input type="email" name="email" autocomplete="email" placeholder="vos@ejemplo.com" required maxlength="180" /></label></div>
           <label>¿Sobre qué querés consultar?<select name="area" id="contact-area"><option value="Consulta general">Seleccioná un área</option>{services.map(service => <option value={service.title}>{service.title}</option>)}<option value="Otra consulta">Otra consulta</option></select></label>
@@ -123,13 +123,13 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           <button type="submit" class="button button-form" disabled>{submitLabel} <Icon name="arrow" size={18} /></button>
           <noscript><p class="demo-note">Activá JavaScript para preparar tu consulta, o usá los enlaces de WhatsApp, teléfono y correo del estudio.</p></noscript>
           {!contactConfigured && <p class="demo-note">Vista de propuesta: podés preparar y descargar tu consulta. El envío se habilita al configurar los datos de contacto.</p>}
-          <div class="form-status" role="status" aria-live="polite"></div><a id="download-consultation" class="text-link ink-link" hidden download="consulta-sebastian-reynoso.txt">Descargar mi consulta <Icon name="download" size={17} /></a>
+          <div class="form-status" role="status" aria-live="polite"></div><a id="download-consultation" class="text-link ink-link" hidden download="consulta-sebastian-reinoso.txt">Descargar mi consulta <Icon name="download" size={17} /></a>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-top"><a href="#inicio" class="brand"><Mark theme={theme} /><span class="brand-name">Sebastián Reynoso<small>ABOGADO</small></span></a><p>Una mirada cercana.<br /><span>Un compromiso profesional.</span></p><a href="#inicio" class="back-top" aria-label="Volver al inicio">Volver arriba <span>↑</span></a></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} Sebastián Reynoso.{site.registration && ` · ${site.registration}`}</span><span>El contenido es informativo y no reemplaza una consulta profesional.</span><button type="button" class="privacy-trigger">Privacidad</button></div></footer>
+  <footer class="site-footer"><div class="container footer-top"><a href="#inicio" class="brand"><Mark theme={theme} /><span class="brand-name">{site.name}<small>ABOGADO</small></span></a><p>Una mirada cercana.<br /><span>Un compromiso profesional.</span></p><a href="#inicio" class="back-top" aria-label="Volver al inicio">Volver arriba <span>↑</span></a></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} {site.name}.{site.registration && ` · ${site.registration}`}</span><span>El contenido es informativo y no reemplaza una consulta profesional.</span><button type="button" class="privacy-trigger">Privacidad</button></div></footer>
 
   <a class="floating-contact" href={site.whatsapp ? `https://wa.me/${site.whatsapp}` : '#contacto'} aria-label={site.whatsapp ? 'Contactar por WhatsApp' : 'Ir al formulario de consulta'} {...(site.whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><Icon name="chat" size={24} /></a>
   {preview && <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>}

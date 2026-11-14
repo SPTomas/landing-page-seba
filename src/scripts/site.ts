@@ -55,7 +55,7 @@ form?.addEventListener('submit', async event => {
   const status = form.querySelector<HTMLElement>('.form-status')!;
   const button = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
   const download = form.querySelector<HTMLAnchorElement>('#download-consultation')!;
-  const text = `Consulta para Sebastián Reynoso\n\nNombre: ${data.get('nombre')}\nCorreo: ${data.get('email')}\nÁrea: ${data.get('area')}\n\n${data.get('mensaje')}\n`;
+  const text = `Consulta para ${form.dataset.professional}\n\nNombre: ${data.get('nombre')}\nCorreo: ${data.get('email')}\nÁrea: ${data.get('area')}\n\n${data.get('mensaje')}\n`;
   const { endpoint, whatsapp, email } = form.dataset;
   status.textContent = '';
   status.classList.remove('is-error');

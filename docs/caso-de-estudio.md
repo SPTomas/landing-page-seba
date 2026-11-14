@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Sebastián Reynoso necesitaba una presencia web que reuniera su práctica como abogado en Córdoba y su faceta de profesor universitario. La primera etapa exploró tres identidades; el cliente eligió **azul y bronce** y proporcionó un retrato actualizado junto con sus datos profesionales.
+Sebastián Reinoso necesitaba una presencia web que reuniera su práctica como abogado en Córdoba y su faceta de profesor universitario. La primera etapa exploró tres identidades; el cliente eligió **azul y bronce** y proporcionó un retrato actualizado junto con sus datos profesionales.
 
 ## Objetivos de la edición
 

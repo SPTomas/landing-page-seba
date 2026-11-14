@@ -13,8 +13,8 @@ Sebastián eligió la primera propuesta: **azul y bronce** (`noche`) y su monogr
 
 Se utiliza el PNG adjunto proporcionado por el cliente, sin regeneración, retoque ni filtros en la página principal.
 
-- Fuente conservada: `public/images/sebastian-reynoso-retrato.png`.
-- Copia para la web: `public/images/sebastian-reynoso.webp`, 768 × 1152 px.
+- Fuente conservada: `public/images/sebastian-reinoso-retrato.png`.
+- Copia para la web: `public/images/sebastian-reinoso.webp`, 768 × 1152 px.
 - La compresión WebP conserva la proporción; el encuadre responsive se realiza con CSS.
 - El JPG anterior y las láminas de propuestas se conservan como material de la exploración inicial.
 
@@ -24,6 +24,7 @@ La selección visual se implementa en `feat/identidad-azul-bronce`. Los cambios 
 
 ## Información profesional confirmada por el cliente
 
+- **Sebastián Reinoso, con i**, según la corrección posterior del cliente. El nombre de la web y de los mensajes se toma de `site.name`; los logos se regeneraron con esa grafía.
 - Abogado y profesor universitario, sin atribuir universidades o cátedras no informadas.
 - Matrícula Provincial **1-42921**.
 - Primera Circunscripción Judicial de la Provincia de Córdoba.

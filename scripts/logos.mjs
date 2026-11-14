@@ -34,7 +34,7 @@ for (const [theme, [ink, accent]] of Object.entries(palettes)) {
     const secondary = white ? '#ffffff' : accent;
     const nameFont = theme === 'grafito' ? bold : serif;
     const nameSize = theme === 'grafito' ? 39 : 46;
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" role="img" aria-labelledby="title"><title id="title">Sebastián Reynoso · Abogado · ${theme}</title><g transform="translate(302 16) scale(2.36)" color="${secondary}">${mark[theme]}</g>${outlined('SEBASTIÁN REYNOSO', nameFont, nameSize, 322, primary, theme === 'grafito' ? .2 : 2.4)}${outlined('ABOGADO', sans, 17, 372, secondary, 9)}<path d="M200 366H280M560 366H640" stroke="${secondary}" stroke-width="1"/></svg>`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 460" role="img" aria-labelledby="title"><title id="title">Sebastián Reinoso · Abogado · ${theme}</title><g transform="translate(302 16) scale(2.36)" color="${secondary}">${mark[theme]}</g>${outlined('SEBASTIÁN REINOSO', nameFont, nameSize, 322, primary, theme === 'grafito' ? .2 : 2.4)}${outlined('ABOGADO', sans, 17, 372, secondary, 9)}<path d="M200 366H280M560 366H640" stroke="${secondary}" stroke-width="1"/></svg>`;
     await writeFile(`public/logos/sr-${theme}${white ? '-blanco' : ''}.svg`, svg);
   }
 }

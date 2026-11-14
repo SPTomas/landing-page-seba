@@ -5,9 +5,9 @@ import random
 import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
-portrait = Image.open(ROOT / 'public/images/sebastian-reynoso-retrato.png').convert('RGB')
+portrait = Image.open(ROOT / 'public/images/sebastian-reinoso-retrato.png').convert('RGB')
 portrait.thumbnail((768, 1152), Image.Resampling.LANCZOS)
-portrait.save(ROOT / 'public/images/sebastian-reynoso.webp', quality=90, method=6)
+portrait.save(ROOT / 'public/images/sebastian-reinoso.webp', quality=90, method=6)
 
 font_dir = ROOT / 'public/fonts'
 font_dir.mkdir(exist_ok=True)

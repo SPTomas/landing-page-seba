@@ -5,12 +5,12 @@ function open() {
   const command = process.platform === 'win32' ? 'rundll32.exe' : process.platform === 'darwin' ? 'open' : 'xdg-open';
   const args = process.platform === 'win32' ? ['url.dll,FileProtocolHandler', url] : [url];
   spawn(command, args, { detached: true, stdio: 'ignore' }).unref();
-  console.log(`\nSitio de Sebastián Reynoso: ${url}\n`);
+  console.log(`\nSitio de Sebastián Reinoso: ${url}\n`);
 }
 let alreadyRunning = false;
 try {
   const response = await fetch(url, { signal: AbortSignal.timeout(1500) });
-  alreadyRunning = response.ok && (await response.text()).includes('Sebastián Reynoso · Abogado');
+  alreadyRunning = response.ok && (await response.text()).includes('Sebastián Reinoso · Abogado');
 } catch { /* No existing preview. Start this project's server below. */ }
 if (alreadyRunning) open();
 else {

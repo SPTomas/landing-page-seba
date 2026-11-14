@@ -1,4 +1,4 @@
-# Sebastián Reynoso · Sitio profesional
+# Sebastián Reinoso · Sitio profesional
 
 Landing page para un abogado y profesor universitario de Córdoba. El proyecto parte de tres exploraciones visuales y evoluciona a la identidad **azul y bronce**, elegida por el cliente.
 
@@ -26,7 +26,7 @@ La configuración central está en [`src/data/site.ts`](src/data/site.ts).
 
 | Dato | Valor |
 | --- | --- |
-| Profesional | Sebastián Reynoso · Abogado y profesor universitario |
+| Profesional | Sebastián Reinoso · Abogado y profesor universitario |
 | Matrícula | Matrícula Provincial 1-42921 |
 | Jurisdicción | Primera Circunscripción Judicial de la Provincia de Córdoba |
 | Estudio | Juan del Campillo 747, barrio Cofico, Córdoba |
@@ -82,6 +82,7 @@ Se admiten las variables `BROWSER_PATH` y `SITE_URL`. `unifont` se fija en `0.7.
 | `npm test` | Ejecuta pruebas de navegador y accesibilidad. Requiere servidor. |
 | `npm run capturas` | Guarda capturas actuales en `docs/capturas/`. Requiere servidor. |
 | `npm run logos` | Regenera los SVG con textos convertidos a trazados. |
+| `npm run logos:png` | Exporta los SVG corregidos a PNG transparentes, sin regenerar mockups. |
 | `npm run exportar` | Reexporta las presentaciones de las tres propuestas. Requiere servidor. |
 | `npm run entrega` | Empaqueta las láminas de propuestas. Requiere Python. |
 
@@ -99,9 +100,9 @@ Las exploraciones iniciales se conservan para documentar el proceso:
 
 - `/propuestas/`: galería; `/oliva/` y `/grafito/`: alternativas navegables.
 - `VER-PROPUESTAS.html`: presentación local sin servidor.
-- `PARA-MOSTRAR/` y `entrega/Sebastian-Reynoso-propuestas.zip`: láminas y logos iniciales.
+- `PARA-MOSTRAR/` y `entrega/Sebastian-Reinoso-propuestas.zip`: láminas y logos iniciales.
 
-Las capturas y el ZIP de esa etapa pueden mostrar el retrato y los textos anteriores. **Las capturas actuales están en `docs/capturas/`.** La página elegida no muestra el selector de propuestas; las alternativas sí. `?presentacion=1` oculta los controles de presentación.
+Las capturas y los mockups conceptuales de esa etapa pueden mostrar el retrato, los textos y la grafía anterior del apellido. **Las capturas actuales están en `docs/capturas/`; el sitio y los logos SVG utilizan Reinoso con i.** La página elegida no muestra el selector de propuestas; las alternativas sí. `?presentacion=1` oculta los controles de presentación.
 
 Los mockups de identidad son exploraciones con asistencia de IA. Los SVG son interpretaciones vectoriales adaptadas, no calcos exactos de esos mockups. No se modificó PagFausto ni se copiaron sus datos.
 
