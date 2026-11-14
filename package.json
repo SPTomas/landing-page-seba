@@ -13,6 +13,7 @@
     "check": "astro check",
     "test": "node scripts/test.mjs",
     "exportar": "node scripts/export.mjs",
+    "capturas": "node scripts/capturas.mjs",
     "logos": "node scripts/logos.mjs",
     "mostrar": "node scripts/start.mjs",
     "entrega": "python scripts/entrega.py"
