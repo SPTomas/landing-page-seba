@@ -27,12 +27,40 @@ try {
       check(await page.locator('.portrait-photo img').evaluate(image => getComputedStyle(image).filter === 'none'), 'Main portrait preserves the supplied colors');
     }
     check(await page.locator('[data-service]').count() === 6, 'Six practice areas');
+    const practiceAreas = [
+      ['civil', 'Derecho civil'],
+      ['comercial', 'Derecho comercial'],
+      ['laboral', 'Derecho laboral'],
+      ['familia', 'Derecho de familia'],
+      ['insolvencia', 'Concursos y quiebras (Insolvencia)'],
+      ['penal', 'Derecho penal'],
+    ];
+    assert.deepEqual(await page.locator('.service-card h3').allTextContents(), practiceAreas.map(([, title]) => title));
+    checks++;
+    check((await page.locator('.hero-role').textContent()).includes('Profesor universitario'), 'Academic role is visible in the hero');
+    check(await page.locator('.academic-profile').isVisible(), 'University teaching has a dedicated section');
+    check((await page.locator('.professional-credentials').textContent()).includes('Matrícula Provincial 1-42921'), 'Confirmed provincial registration is visible');
+    check((await page.locator('.professional-credentials').textContent()).includes('Primera Circunscripción Judicial de la Provincia de Córdoba'), 'Full jurisdiction is visible');
+    check(await page.locator('.contact-methods a[href="tel:+5493515307287"]').count() === 1, 'Telephone uses the supplied number');
+    check(await page.locator('.contact-methods a[href="mailto:reinososebastian8@gmail.com"]').count() === 1, 'Email uses the supplied address');
+    check(await page.locator('.contact-methods a[href="https://wa.me/5493515307287"]').count() === 1, 'WhatsApp uses the Argentine international number');
+    check(await page.locator('.floating-contact').getAttribute('href') === 'https://wa.me/5493515307287', 'Floating action opens the configured WhatsApp');
+    const mapURL = new URL(await page.locator('.contact-methods a[href^="https://www.google.com/maps/"]').getAttribute('href'));
+    check(mapURL.searchParams.get('query') === 'Juan del Campillo 747, barrio Cofico, Córdoba, Argentina', 'Map points to the supplied office address');
+    check((await page.locator('button[type="submit"]').textContent()).includes('Continuar por WhatsApp'), 'Submit button describes the actual handoff, not a completed send');
     for (const width of [320, 390, 700, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
       check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${path} has no horizontal overflow at ${width}px`);
     }
     await page.setViewportSize({ width: 1440, height: 1080 });
     check(await page.evaluate(() => [...document.images].every(image => image.naturalWidth > 0)), `${path} no broken images`);
+    for (const [id, title] of practiceAreas) {
+      await page.locator(`[data-service="${id}"]`).click();
+      check(await page.locator('#service-dialog-title').textContent() === title, `${id} opens its correct detail`);
+      check(await page.locator('.dialog-examples li').count() >= 2, `${id} includes concrete consultation examples`);
+      await page.locator('.dialog-contact').click();
+      check(await page.locator('#contact-area').inputValue() === title, `${id} is preselected when consulting`);
+    }
     await page.locator('[data-service="laboral"]').click();
     check(await page.locator('#service-dialog').isVisible(), 'Practice-area modal opens');
     check(await page.locator('#service-dialog-title').textContent() === 'Derecho laboral', 'Modal shows correct content');
@@ -46,13 +74,31 @@ try {
     check(await page.locator('details').first().getAttribute('open') !== null, 'FAQ expands');
     await page.locator('.contact-form .privacy-trigger').click();
     check(await page.locator('#privacy-dialog').isVisible(), 'Privacy dialog opens');
+    check(await page.locator('#privacy-dialog a[href="mailto:reinososebastian8@gmail.com"]').count() === 1, 'Privacy includes a real channel for data-rights requests');
     await page.keyboard.press('Escape');
+    check(!await page.locator('#contact-form').evaluate(form => form.checkValidity()), 'Empty form cannot submit');
     await page.getByRole('textbox', { name: 'Nombre y apellido' }).fill('Persona de prueba');
     await page.getByRole('textbox', { name: 'Correo electrónico' }).fill('prueba@example.com');
     await page.getByRole('textbox', { name: 'Tu consulta' }).fill('Esta es una consulta de prueba sin información sensible.');
     await page.locator('[name="consentimiento"]').check();
     const outgoing = [];
     page.on('request', req => { if (req.method() === 'POST') outgoing.push(req.url()); });
+    // Intercept the popup locally: no test data is sent to WhatsApp or any real service.
+    await context.route('https://wa.me/**', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<p>WhatsApp mock</p>' }));
+    const popupPromise = page.waitForEvent('popup');
+    await page.locator('button[type="submit"]').click();
+    const popup = await popupPromise;
+    await popup.waitForURL('https://wa.me/**');
+    const whatsappURL = new URL(popup.url());
+    check(whatsappURL.pathname === '/5493515307287', 'Prepared message targets the correct WhatsApp');
+    check(whatsappURL.searchParams.get('text').includes('Persona de prueba') && whatsappURL.searchParams.get('text').includes('Derecho laboral'), 'WhatsApp message includes the entered data and selected area');
+    check((await page.locator('.form-status').textContent()).includes('Confirmá el envío allí'), 'WhatsApp handoff does not claim the consultation was sent');
+    check(outgoing.length === 0, 'Configured WhatsApp form makes no POST requests');
+    check(await page.getByRole('textbox', { name: 'Nombre y apellido' }).inputValue() === 'Persona de prueba', 'WhatsApp handoff preserves form data');
+    await popup.close();
+
+    // Keep the offline fallback covered if contact channels are removed in the future.
+    await page.locator('#contact-form').evaluate(form => { form.dataset.whatsapp = ''; form.dataset.email = ''; });
     await page.locator('button[type="submit"]').click();
     check((await page.locator('.form-status').textContent()).includes('no envía datos'), 'Demo accurately reports that nothing was sent');
     check(outgoing.length === 0, 'Demo form makes no POST requests');
@@ -105,7 +151,9 @@ try {
   check(galleryAxe.violations.length === 0, `Gallery accessibility: ${JSON.stringify(galleryAxe.violations.map(v => ({id:v.id,nodes:v.nodes.map(n => n.target)})))}`);
   const noJS = await browser.newPage({ javaScriptEnabled: false });
   await noJS.goto(baseURL + '/');
-  check(await noJS.locator('button[type="submit"]').isDisabled(), 'Without JavaScript, the unconfigured form cannot accidentally submit data');
+    check(await noJS.locator('button[type="submit"]').isDisabled(), 'Without JavaScript, the form cannot accidentally submit data');
+    check(await noJS.locator('.contact-methods a[href="tel:+5493515307287"]').isVisible(), 'Telephone remains available without JavaScript');
+    check(await noJS.locator('.contact-methods a[href="https://wa.me/5493515307287"]').isVisible(), 'Direct WhatsApp remains available without JavaScript');
   check(errors.length === 0, `No browser errors: ${errors.join('; ')}`);
   console.log(`PASS ${checks} checks. No browser errors.`);
 } finally { await browser.close(); }
