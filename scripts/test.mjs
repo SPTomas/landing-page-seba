@@ -19,6 +19,13 @@ try {
     await ready(page);
     check(await page.title() === 'Sebastián Reynoso · Abogado', 'Correct title');
     check(await page.locator('h1').count() === 1, 'Exactly one H1');
+    check(await page.locator('.preview-dock').count() === (path === '/' ? 0 : 1), 'Only archived alternatives show the design selector');
+    if (path === '/') {
+      check(await page.locator('html').getAttribute('data-theme') === 'noche', 'Selected blue-and-bronze identity is the main page');
+      check(await page.locator('link[rel="icon"]').getAttribute('href') === '/logos/sr-noche.svg', 'Selected logo is used as favicon');
+      check(await page.locator('.portrait-photo img').evaluate(image => image.naturalWidth === 768 && image.naturalHeight === 1152), 'Updated portrait is optimized without changing its proportions');
+      check(await page.locator('.portrait-photo img').evaluate(image => getComputedStyle(image).filter === 'none'), 'Main portrait preserves the supplied colors');
+    }
     check(await page.locator('[data-service]').count() === 6, 'Six practice areas');
     for (const width of [320, 390, 700, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
