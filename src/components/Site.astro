@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import Mark from './Mark.astro';
 import Icon from './Icon.astro';
 import { site, themes, services, faqs, type Theme } from '../data/site';
-interface Props { theme?: Theme }
-const { theme = 'noche' } = Astro.props;
+interface Props { theme?: Theme; preview?: boolean }
+const { theme = 'noche', preview = false } = Astro.props;
 const identity = themes[theme];
 const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.email);
 ---
-<Layout theme={theme}>
+<Layout theme={theme} preview={preview}>
   <header class="site-header">
     <div class="container nav-inner">
       <a href="#inicio" class="brand" aria-label="Sebastián Reynoso, inicio">
@@ -37,7 +37,7 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
           <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="check" size={14} /> Compromiso con tu caso</span></div>
         </div>
         <figure class="hero-portrait">
-          <div class="portrait-photo"><img src="/images/sebastian-reynoso.webp" width="682" height="1024" alt="Sebastián Reynoso, de traje azul y anteojos" loading="eager" fetchpriority="high" /></div>
+          <div class="portrait-photo"><img src="/images/sebastian-reynoso.webp" width="768" height="1152" alt="Sebastián Reynoso, de traje azul y anteojos" loading="eager" fetchpriority="high" /></div>
           <span class="portrait-side-label" aria-hidden="true">ESCUCHA. ESTRATEGIA. COMPROMISO.</span>
           <figcaption><span class="caption-line"></span><div><strong>Sebastián Reynoso</strong><small>ABOGADO · ASESORAMIENTO INTEGRAL</small></div><Icon name="arrow" size={22} /></figcaption>
           <div class="portrait-stamp" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id={`seal-${theme}`} d="M50,50m-38,0a38,38 0 1,1 76,0a38,38 0 1,1-76,0" /></defs><text><textPath href={`#seal-${theme}`} textLength="238">CERCANÍA · CLARIDAD · COMPROMISO · </textPath></text></svg><Mark theme={theme} /></div>
@@ -104,7 +104,7 @@ const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.ema
   <footer class="site-footer"><div class="container footer-top"><a href="#inicio" class="brand"><Mark theme={theme} /><span class="brand-name">Sebastián Reynoso<small>ABOGADO</small></span></a><p>Una mirada cercana.<br /><span>Un compromiso profesional.</span></p><a href="#inicio" class="back-top" aria-label="Volver al inicio">Volver arriba <span>↑</span></a></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} Sebastián Reynoso.{site.registration && ` · ${site.registration}`}</span><span>El contenido es informativo y no reemplaza una consulta profesional.</span><button type="button" class="privacy-trigger">Privacidad</button></div></footer>
 
   <a class="floating-contact" href={site.whatsapp ? `https://wa.me/${site.whatsapp}` : '#contacto'} aria-label={site.whatsapp ? 'Contactar por WhatsApp' : 'Ir al formulario de consulta'} {...(site.whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><Icon name="chat" size={24} /></a>
-  <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>
+  {preview && <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>}
 
   <dialog id="service-dialog" class="site-dialog"><button type="button" class="dialog-close" aria-label="Cerrar detalle del área"><Icon name="close" size={22} /></button><p class="eyebrow">Áreas de práctica</p><h2 id="service-dialog-title"></h2><p class="dialog-description"></p><ul class="dialog-examples"></ul><a href="#contacto" class="button button-form dialog-contact">Consultar sobre esta área <Icon name="arrow" size={17} /></a><p class="dialog-disclaimer">El alcance de la intervención se confirma luego de evaluar cada caso.</p></dialog>
   <dialog id="privacy-dialog" class="site-dialog privacy-dialog" aria-labelledby="privacy-title"><button type="button" class="dialog-close" aria-label="Cerrar información de privacidad"><Icon name="close" size={22} /></button><p class="eyebrow">Tu información</p><h2 id="privacy-title">Privacidad y contacto</h2><p>Los datos solicitados se utilizan exclusivamente para preparar o gestionar tu consulta. No incluyas datos sensibles, documentación médica o información de terceros en este formulario.</p>{!contactConfigured ? <p><strong>Esta es una propuesta de diseño.</strong> No se envían datos a ningún servidor. La consulta se prepara en tu navegador y se puede descargar como archivo de texto.</p> : <p>Según el canal configurado, la consulta se enviará al servicio de formularios indicado, o se abrirá tu aplicación de correo o WhatsApp para que confirmes el envío. Esos servicios aplican sus propias políticas de privacidad.</p>}<p>Completar el formulario no establece por sí solo una relación profesional ni confirma la aceptación de un caso. Antes de publicar, deben completarse los datos del responsable, el canal para ejercer derechos sobre los datos y los plazos de conservación.</p></dialog>
