@@ -1,6 +1,8 @@
 # Sebastián Reynoso · Identidad y página web
 
-Tres propuestas distintas, inspiradas en la estructura editorial de `../PagFausto/landing-page`. **No se modificó PagFausto ni se copiaron sus datos de contacto.**
+Sitio de Sebastián Reynoso. **Identidad elegida: azul y bronce**, con el logo de la primera propuesta y el nuevo retrato proporcionado. Las otras propuestas se conservan como exploración visual. No se modificó PagFausto ni se copiaron sus datos de contacto.
+
+Las decisiones están documentadas en [`docs/decisiones-diseno.md`](docs/decisiones-diseno.md).
 
 ## Para mostrar ahora
 
@@ -8,7 +10,7 @@ Tres propuestas distintas, inspiradas en la estructura editorial de `../PagFaust
 - Abrir **`PARA-MOSTRAR/00-Comparativa-general.png`** para ver las tres opciones juntas.
 - En **`PARA-MOSTRAR/`** cada propuesta tiene presentación PNG, identidad visual, vistas de escritorio/celular y logos SVG/PNG.
 - **`entrega/Sebastian-Reynoso-propuestas.zip`** reúne todo para compartir. Subir el proyecto a GitHub no despliega el sitio web.
-- Para navegar las páginas, abrir **`INICIAR.cmd`** o ejecutar `npm run mostrar`.
+- Para abrir el sitio elegido, ejecutar **`INICIAR.cmd`** o `npm run mostrar`. La galería sigue disponible en `/propuestas/`.
 
 ### Las opciones
 
@@ -19,12 +21,12 @@ Tres propuestas distintas, inspiradas en la estructura editorial de `../PagFaust
 | 03 · Grafito editorial | Contemporánea, geométrica, retrato en blanco y negro. | <http://127.0.0.1:4322/grafito/> |
 | Galería de propuestas | Identidades, páginas y descargas. | <http://127.0.0.1:4322/propuestas/> |
 
-El selector inferior permite cambiar de propuesta. Agregar `?presentacion=1` a la URL lo oculta para una presentación limpia.
+La página principal no muestra el selector de propuestas. Las alternativas lo conservan; agregar `?presentacion=1` a su URL lo oculta para una presentación limpia.
 
 ## Qué está funcionando
 
 - Tres versiones estáticas completas; navegación móvil y enlaces internos.
-- Foto **original del adjunto**, sin regenerar ni modificar la identidad de Sebastián. Se conserva el JPG; la página utiliza una copia WebP optimizada.
+- Nuevo retrato **del adjunto**, sin regenerar ni retocar. Se conserva el PNG proporcionado; la página utiliza una copia WebP optimizada, sin filtro de color en la identidad elegida. El JPG previo queda como archivo de la exploración.
 - Seis áreas con ventanas de detalle y selección automática del área de consulta.
 - Preguntas frecuentes desplegables, ventanas de privacidad, navegación por teclado y foco visible.
 - Formulario con validación y consentimiento. **Sin canal configurado no envía nada:** prepara una consulta descargable en texto, dentro del navegador. No guarda datos en almacenamiento local.
@@ -45,7 +47,7 @@ npm run dev
 
 | Comando | Función |
 | --- | --- |
-| `npm run mostrar` | Inicia la web y abre la galería; reutiliza el servidor si ya está activo. |
+| `npm run mostrar` | Inicia la web elegida; reutiliza el servidor si ya está activo. |
 | `npm run check` | Revisa Astro y TypeScript. |
 | `npm run build` | Genera el sitio estático en `dist/`. |
 | `npm run preview` | Sirve la compilación en el puerto 4322. |
