@@ -1,0 +1,22 @@
+---
+interface Props { name: string; size?: number; class?: string }
+const { name, size = 28, class: className } = Astro.props;
+const paths: Record<string, string> = {
+  document: 'M7 3h7l4 4v14H5V3h2Zm7 0v5h5M8 12h7M8 16h5',
+  briefcase: 'M8 6V3h8v3M3 7h18v13H3V7Zm0 5c5 4 13 4 18 0M10 13h4',
+  people: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 10v-2a7 7 0 0 1 14 0v2M17 4a4 4 0 0 1 0 8M19 15a6 6 0 0 1 3 5',
+  branch: 'M12 3v18M8 21h8M12 14 5 8M12 11l7-6M5 8V4M5 8H1M19 5V1M19 5h4',
+  shield: 'M12 2c3 3 6 3 9 4 0 8-3 13-9 16C6 19 3 14 3 6c3-1 6-1 9-4Zm-4 10 3 3 5-6',
+  car: 'M4 10 6 4h12l2 6M3 10h18v9H3v-9Zm2 9v3M19 19v3M6 14h2M16 14h2',
+  arrow: 'M5 19 19 5M5 5h14v14',
+  down: 'M12 3v18M5 14l7 7 7-7',
+  check: 'm5 12 4 4L19 6',
+  chat: 'M21 11a9 9 0 0 1-9 9H3l1.5-5A9 9 0 1 1 21 11ZM8 10h8M8 14h5',
+  close: 'm5 5 14 14M5 19 14-14',
+  download: 'M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5',
+  pin: 'M19 9c0 6-7 13-7 13S5 15 5 9a7 7 0 1 1 14 0Zm-4 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+  globe: 'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z',
+  mail: 'M3 5h18v14H3V5Zm0 0 9 8 9-8',
+};
+---
+<svg width={size} height={size} class={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name] ?? paths.arrow} /></svg>

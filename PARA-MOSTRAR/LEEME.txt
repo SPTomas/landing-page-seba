@@ -1,0 +1,14 @@
+SEBASTIÁN REYNOSO / TRES PROPUESTAS
+
+Empezá por 00-Comparativa-general.png.
+Cada carpeta incluye una presentación para mostrar, identidad visual, vistas de la página y logos PNG/SVG.
+
+01 Noche y bronce: clásico, firme y elegante (punto de partida sugerido).
+02 Marfil y oliva: cercano, cálido y editorial.
+03 Grafito editorial: moderno, directo y minimalista.
+
+Las fotos son las originales proporcionadas. Los mockups de identidad son exploraciones con asistencia de IA; los logos SVG son interpretaciones propias para la web.
+
+Antes de publicar deben confirmarse áreas de práctica, datos profesionales, matrícula, modalidad de atención, WhatsApp/correo y privacidad. El formulario no envía consultas mientras no se configure un canal.
+
+Para ver las páginas en esta computadora: INICIAR.cmd, o npm run mostrar desde la carpeta del proyecto.

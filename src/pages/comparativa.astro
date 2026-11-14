@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { themes } from '../data/site';
+---
+<Layout title="Comparativa visual · Sebastián Reynoso" presentation>
+  <main id="contenido" class="compare-page"><div class="compare-heading"><h1>Sebastián Reynoso<span style="font-style:italic;color:#7e623e"> / Tres caminos.</span></h1><p>Identidad visual & diseño web</p></div><div class="compare-grid">{Object.entries(themes).map(([key, theme]) => <article class="compare-column"><p class="eyebrow">Propuesta {theme.number}</p><h2>{theme.name}</h2><img class="compare-board" src={theme.board} width="1536" height="1024" alt={theme.name} /><img class="compare-web" src={`/propuestas/web-${key}-desktop.png`} width="1440" height="1080" alt={`Web ${theme.name}`} /><p>{theme.personality}</p></article>)}</div><div class="compare-bottom"><span>Una mirada cercana. Un compromiso profesional.</span><span>Foto original · Tres identidades · Tres versiones navegables</span></div></main>
+</Layout>

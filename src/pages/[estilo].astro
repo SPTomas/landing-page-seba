@@ -1,0 +1,9 @@
+---
+import Site from '../components/Site.astro';
+import type { Theme } from '../data/site';
+export function getStaticPaths() {
+  return [{ params: { estilo: 'oliva' }, props: { theme: 'oliva' } }, { params: { estilo: 'grafito' }, props: { theme: 'grafito' } }];
+}
+const { theme } = Astro.props as { theme: Theme };
+---
+<Site theme={theme} />

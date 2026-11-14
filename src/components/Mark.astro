@@ -1,0 +1,21 @@
+---
+import type { Theme } from '../data/site';
+interface Props { theme?: Theme; class?: string }
+const { theme = 'noche', class: className = '' } = Astro.props;
+---
+<svg class:list={['brand-mark', className]} viewBox="0 0 100 100" fill="none" aria-hidden="true">
+  {theme === 'noche' && <>
+    <path d="M47 18C39 10 17 12 16 30C15 45 52 47 51 65C50 85 24 91 13 77L11 63M48 14L48 33" stroke="currentColor" stroke-width="3" />
+    <path d="M40 28H66C90 28 92 57 65 59H49M51 29V86M41 87H64M64 59L86 87H94" stroke="currentColor" stroke-width="3" />
+    <path d="M52 29V86M66 60L85 86" stroke="currentColor" stroke-width="6" />
+  </>}
+  {theme === 'oliva' && <>
+    <path d="M27 87H10V10H90V87H78" stroke="currentColor" stroke-width="1.5" />
+    <path d="M48 25C38 16 23 22 23 34C23 47 52 45 52 60C52 77 28 79 21 65M49 20V35M43 41H64C85 41 84 63 64 64H51M53 42V90M44 90H65M64 64L82 90H91" stroke="currentColor" stroke-width="2" />
+    <path d="M54 42V89" stroke="currentColor" stroke-width="4" />
+  </>}
+  {theme === 'grafito' && <>
+    <path d="M47 20H26C4 20 4 48 26 48H35C57 48 57 78 35 78H10M59 20H73C95 20 95 49 73 49H61L88 78" stroke="currentColor" stroke-width="12" />
+    <path d="M43 15L59 34" stroke="var(--hero-bg, #222326)" stroke-width="5" />
+  </>}
+</svg>
