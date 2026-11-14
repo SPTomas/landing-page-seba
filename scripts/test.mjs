@@ -17,10 +17,15 @@ try {
     const response = await page.goto(baseURL + path);
     check(response.ok(), `${path} responds successfully`);
     await ready(page);
-    check(await page.title() === 'Sebastián Reynoso · Abogado', 'Correct title');
+    check(await page.title() === 'Sebastián Reinoso · Abogado', 'Correct title');
+    check(!(await page.locator('body').textContent()).includes('Reynoso'), 'Visible text consistently uses Reinoso with an i');
+    check((await page.locator('.brand-name').first().textContent()).includes('Sebastián Reinoso'), 'Header displays the corrected surname');
     check(await page.locator('h1').count() === 1, 'Exactly one H1');
     check(await page.locator('.preview-dock').count() === (path === '/' ? 0 : 1), 'Only archived alternatives show the design selector');
     if (path === '/') {
+      const logoResponse = await page.request.get(`${baseURL}/logos/sr-noche.svg`);
+      const logoSource = await logoResponse.text();
+      check(logoResponse.ok() && logoSource.includes('Sebastián Reinoso') && !logoSource.includes('Reynoso'), 'Downloadable vector logo uses the corrected surname');
       check(await page.locator('html').getAttribute('data-theme') === 'noche', 'Selected blue-and-bronze identity is the main page');
       check(await page.locator('link[rel="icon"]').getAttribute('href') === '/logos/sr-noche.svg', 'Selected logo is used as favicon');
       check(await page.locator('.portrait-photo img').evaluate(image => image.naturalWidth === 768 && image.naturalHeight === 1152), 'Updated portrait is optimized without changing its proportions');
@@ -92,6 +97,7 @@ try {
     const whatsappURL = new URL(popup.url());
     check(whatsappURL.pathname === '/5493515307287', 'Prepared message targets the correct WhatsApp');
     check(whatsappURL.searchParams.get('text').includes('Persona de prueba') && whatsappURL.searchParams.get('text').includes('Derecho laboral'), 'WhatsApp message includes the entered data and selected area');
+    check(whatsappURL.searchParams.get('text').startsWith('Consulta para Sebastián Reinoso'), 'WhatsApp message uses the corrected professional name');
     check((await page.locator('.form-status').textContent()).includes('Confirmá el envío allí'), 'WhatsApp handoff does not claim the consultation was sent');
     check(outgoing.length === 0, 'Configured WhatsApp form makes no POST requests');
     check(await page.getByRole('textbox', { name: 'Nombre y apellido' }).inputValue() === 'Persona de prueba', 'WhatsApp handoff preserves form data');
@@ -108,6 +114,7 @@ try {
     const download = await downloadPromise;
     const contents = await readFile(await download.path(), 'utf8');
     check(contents.includes('Persona de prueba') && contents.includes('Derecho laboral'), 'Download contains the entered consultation and selected area');
+    check(contents.startsWith('Consulta para Sebastián Reinoso'), 'Offline download uses the corrected surname');
     // Exercise both configured-endpoint outcomes without sending anything to a real service.
     await page.locator('#contact-form').evaluate((element, url) => { element.dataset.endpoint = url; }, `${baseURL}/__test-form`);
     await page.route('**/__test-form', route => route.fulfill({ status: 500, body: '{}' }));

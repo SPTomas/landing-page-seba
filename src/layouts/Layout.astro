@@ -4,9 +4,9 @@ import '@fontsource/cormorant-garamond/latin-500.css';
 import '@fontsource/cormorant-garamond/latin-400-italic.css';
 import '@fontsource-variable/manrope';
 import '../styles/global.css';
-import type { Theme } from '../data/site';
+import { site, type Theme } from '../data/site';
 interface Props { title?: string; description?: string; theme?: Theme; presentation?: boolean; preview?: boolean }
-const { title = 'Sebastián Reynoso · Abogado', description = 'Abogado y profesor universitario en Córdoba. Derecho civil, comercial, laboral, familia, concursos y quiebras y penal. Atención en barrio Cofico.', theme = 'noche', presentation = false, preview = false } = Astro.props;
+const { title = `${site.name} · ${site.profession}`, description = 'Abogado y profesor universitario en Córdoba. Derecho civil, comercial, laboral, familia, concursos y quiebras y penal. Atención en barrio Cofico.', theme = 'noche', presentation = false, preview = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="es-AR" data-theme={theme}>
