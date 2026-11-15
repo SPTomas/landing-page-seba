@@ -53,15 +53,17 @@ try {
     check(await page.locator('.contact-methods a[href="https://wa.me/5493515307287"]').count() === 1, 'WhatsApp uses the Argentine international number');
     check(await page.locator('.floating-contact').getAttribute('href') === 'https://wa.me/5493515307287', 'Floating action opens the configured WhatsApp');
     check(await page.locator('.floating-contact [data-icon="whatsapp"]').count() === 1, 'Floating action uses the recognizable WhatsApp logo instead of a generic chat icon');
-    check(await page.locator('.floating-contact').getAttribute('aria-label') === 'Escribile a Sebastián Reinoso por WhatsApp', 'WhatsApp action has a clear accessible name');
+    check(await page.locator('.floating-contact').getAttribute('aria-label') === '¿Tenés una consulta? Escribime por WhatsApp · Sebastián Reinoso', 'WhatsApp action has an accessible name matching its visible invitation');
+    check(await page.locator('.floating-label').isVisible(), 'WhatsApp invitation is visible without hovering or using a keyboard');
+    check((await page.locator('.nav-cta').textContent()).trim() === 'Contactame', 'Header uses the requested Contactame label');
+    check((await page.locator('.hero-actions .button-primary').textContent()).trim() === 'Contame tu caso', 'Hero uses a personal invitation instead of repeating the platform name');
     check(await page.locator('.hero-actions .button-primary').getAttribute('href') === 'https://wa.me/5493515307287', 'Primary hero action starts a direct WhatsApp conversation');
     check(await page.locator('.nav-cta [data-icon="whatsapp"]').count() === 1, 'Header action consistently identifies WhatsApp');
     check(await page.locator('.professional-strip strong').count() === 3, 'Professional facts have a readable summary below the hero');
     if (path === '/') {
       await page.keyboard.press('Tab');
       await page.locator('.floating-contact').focus();
-      await page.waitForFunction(() => getComputedStyle(document.querySelector('.floating-label')).opacity === '1');
-      check(await page.locator('.floating-label').isVisible(), 'WhatsApp tooltip is available to keyboard users');
+      check(await page.locator('.floating-label').isVisible(), 'Persistent WhatsApp invitation also remains available to keyboard users');
       const directPopupPromise = page.waitForEvent('popup');
       await page.locator('.floating-contact').click();
       const directPopup = await directPopupPromise;
@@ -158,8 +160,12 @@ try {
     const accessibility = await new AxeBuilder({ page }).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
     check(accessibility.violations.length === 0, `${path} accessibility issues: ${JSON.stringify(accessibility.violations.map(v => ({id:v.id,nodes:v.nodes.map(n => n.target)})))}`);
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.getByRole('textbox', { name: 'Nombre y apellido' }).focus();
+    check(!await page.locator('.floating-label').isVisible(), 'Mobile invitation collapses while filling the form so it does not cover inputs');
+    check((await page.locator('.floating-contact').boundingBox()).width <= 70, 'Collapsed mobile WhatsApp remains a compact touch target');
     await page.evaluate(() => scrollTo(0,0));
     await page.locator('.menu-toggle').click();
+    check(await page.locator('.floating-label').isVisible(), 'Mobile invitation expands again after leaving the form');
     check(await page.locator('#mobile-menu').isVisible(), 'Mobile navigation opens');
     await page.keyboard.press('Escape');
     check(!await page.locator('#mobile-menu').isVisible(), 'Escape closes mobile navigation');
@@ -167,6 +173,9 @@ try {
     await page.locator('.menu-toggle').click();
     await page.locator('#mobile-menu a[href="#areas"]').click();
     check(!await page.locator('#mobile-menu').isVisible(), 'Mobile menu closes after navigation');
+    await page.locator('.site-footer .privacy-trigger').click();
+    check(await page.locator('#privacy-dialog').isVisible(), 'Footer privacy remains clickable above the expanded WhatsApp invitation');
+    await page.keyboard.press('Escape');
     await page.goto(`${baseURL}${path}?presentacion=1`);
     check(!await page.locator('.preview-dock').isVisible(), 'Presentation mode hides comparison toolbar');
     await context.close();
@@ -192,6 +201,11 @@ try {
   check(await noJS.locator('button[type="submit"]').isDisabled(), 'Without JavaScript, the form cannot accidentally submit data');
   check(await noJS.locator('.contact-methods a[href="tel:+5493515307287"]').isVisible(), 'Telephone remains available without JavaScript');
   check(await noJS.locator('.contact-methods a[href="https://wa.me/5493515307287"]').isVisible(), 'Direct WhatsApp remains available without JavaScript');
+  check(await noJS.locator('.floating-label').isVisible(), 'Persistent invitation works without JavaScript');
+  const reducedMotion = await browser.newPage({ reducedMotion: 'reduce' });
+  await reducedMotion.goto(baseURL + '/');
+  check(await reducedMotion.locator('.floating-icon').evaluate(icon => getComputedStyle(icon, '::after').animationName === 'none'), 'WhatsApp attention effect respects reduced-motion preferences');
+  check(await reducedMotion.locator('.floating-label').isVisible(), 'Reduced-motion users keep the visible WhatsApp invitation');
   check(errors.length === 0, `No browser errors: ${errors.join('; ')}`);
   console.log(`PASS ${checks} checks. No browser errors.`);
 } finally { await browser.close(); }

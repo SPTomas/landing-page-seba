@@ -22,7 +22,7 @@ Sebastián Reinoso necesitaba una presencia web que reuniera su práctica como a
 
 **Contenido.** Se distinguen Civil, Comercial, Laboral, Familia, Concursos y Quiebras (Insolvencia), y Penal. Matrícula, jurisdicción y dirección son visibles. La docencia tiene presencia en el inicio y en un bloque del estudio.
 
-**Contacto.** Las ventanas de áreas preseleccionan el tema en el formulario. Al continuar, se prepara un mensaje en WhatsApp; la persona confirma el envío allí. El acceso flotante utiliza el ícono reconocible de WhatsApp y se acompaña de llamadas directas en el inicio y encabezado. Teléfono, correo y ubicación son enlaces directos, sin mapas embebidos ni rastreadores.
+**Contacto.** Las ventanas de áreas preseleccionan el tema en el formulario. Al continuar, se prepara un mensaje en WhatsApp; la persona confirma el envío allí. El encabezado invita con “Contactame” y el inicio con “Contame tu caso”. El flotante combina el ícono reconocible con “¿Tenés una consulta? Escribime por WhatsApp”, visible sin hover y compacto al completar el formulario en celular. Teléfono, correo y ubicación son enlaces directos, sin mapas embebidos ni rastreadores.
 
 **Refinamiento.** Se mejora la legibilidad, se separan las tarjetas de áreas y se destaca el bloque de docencia con fondo azul. La navegación señala la sección actual y los controles reciben tamaños táctiles y estados de foco más claros.
 
@@ -34,7 +34,7 @@ En esta edición se ejecutaron:
 
 - `npm run check`: sin errores ni advertencias.
 - `npm run build`: compilación estática correcta.
-- `npm test`: **316 comprobaciones**, sin errores de navegador.
+- `npm test`: **340 comprobaciones**, sin errores de navegador.
 
 Las pruebas incluyen datos, apellido corregido, imágenes, seis áreas, selección del formulario, nueve anchos de 320 a 1440 px, menú móvil con retorno de foco, navegación activa, privacidad, descarga local, clic del botón flotante y formulario de WhatsApp interceptados y endpoints simulados. axe-core revisa reglas WCAG A/AA; no se presenta esta prueba automática como certificación de accesibilidad ni como auditoría manual completa.
 
