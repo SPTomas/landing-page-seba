@@ -10,6 +10,8 @@ const errors = [];
 try {
   for (const path of ['/', '/oliva/', '/grafito/']) {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1080 } });
+    // All WhatsApp visits are mocked locally, including the floating action.
+    await context.route('https://wa.me/**', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<p>WhatsApp mock</p>' }));
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(`${path}: ${error.message}`));
     const external = [];
@@ -50,14 +52,40 @@ try {
     check(await page.locator('.contact-methods a[href="mailto:reinososebastian8@gmail.com"]').count() === 1, 'Email uses the supplied address');
     check(await page.locator('.contact-methods a[href="https://wa.me/5493515307287"]').count() === 1, 'WhatsApp uses the Argentine international number');
     check(await page.locator('.floating-contact').getAttribute('href') === 'https://wa.me/5493515307287', 'Floating action opens the configured WhatsApp');
+    check(await page.locator('.floating-contact [data-icon="whatsapp"]').count() === 1, 'Floating action uses the recognizable WhatsApp logo instead of a generic chat icon');
+    check(await page.locator('.floating-contact').getAttribute('aria-label') === 'Escribile a Sebastián Reinoso por WhatsApp', 'WhatsApp action has a clear accessible name');
+    check(await page.locator('.hero-actions .button-primary').getAttribute('href') === 'https://wa.me/5493515307287', 'Primary hero action starts a direct WhatsApp conversation');
+    check(await page.locator('.nav-cta [data-icon="whatsapp"]').count() === 1, 'Header action consistently identifies WhatsApp');
+    check(await page.locator('.professional-strip strong').count() === 3, 'Professional facts have a readable summary below the hero');
+    if (path === '/') {
+      await page.keyboard.press('Tab');
+      await page.locator('.floating-contact').focus();
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('.floating-label')).opacity === '1');
+      check(await page.locator('.floating-label').isVisible(), 'WhatsApp tooltip is available to keyboard users');
+      const directPopupPromise = page.waitForEvent('popup');
+      await page.locator('.floating-contact').click();
+      const directPopup = await directPopupPromise;
+      await directPopup.waitForURL('https://wa.me/**');
+      check(new URL(directPopup.url()).pathname === '/5493515307287', 'Floating WhatsApp action opens the supplied number without sending a message');
+      await directPopup.close();
+    }
     const mapURL = new URL(await page.locator('.contact-methods a[href^="https://www.google.com/maps/"]').getAttribute('href'));
     check(mapURL.searchParams.get('query') === 'Juan del Campillo 747, barrio Cofico, Córdoba, Argentina', 'Map points to the supplied office address');
     check((await page.locator('button[type="submit"]').textContent()).includes('Continuar por WhatsApp'), 'Submit button describes the actual handoff, not a completed send');
-    for (const width of [320, 390, 700, 768, 1024, 1440]) {
+    for (const width of [320, 360, 390, 414, 700, 768, 820, 1024, 1440]) {
       await page.setViewportSize({ width, height: 1000 });
       check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${path} has no horizontal overflow at ${width}px`);
+      check(await page.locator('.floating-contact').evaluate(link => {
+        const rect = link.getBoundingClientRect();
+        return rect.width >= 44 && rect.height >= 44 && rect.left >= 0 && rect.right <= innerWidth && rect.bottom <= innerHeight;
+      }), `${path} WhatsApp touch target is large enough and stays within the viewport at ${width}px`);
     }
     await page.setViewportSize({ width: 1440, height: 1080 });
+    if (path === '/') {
+      await page.locator('.desktop-nav a[href="#areas"]').click();
+      await page.locator('.desktop-nav a[href="#areas"][aria-current="location"]').waitFor();
+      check(true, 'Desktop navigation highlights the currently viewed section');
+    }
     check(await page.evaluate(() => [...document.images].every(image => image.naturalWidth > 0)), `${path} no broken images`);
     for (const [id, title] of practiceAreas) {
       await page.locator(`[data-service="${id}"]`).click();
@@ -89,7 +117,6 @@ try {
     const outgoing = [];
     page.on('request', req => { if (req.method() === 'POST') outgoing.push(req.url()); });
     // Intercept the popup locally: no test data is sent to WhatsApp or any real service.
-    await context.route('https://wa.me/**', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<p>WhatsApp mock</p>' }));
     const popupPromise = page.waitForEvent('popup');
     await page.locator('button[type="submit"]').click();
     const popup = await popupPromise;
@@ -134,6 +161,10 @@ try {
     await page.evaluate(() => scrollTo(0,0));
     await page.locator('.menu-toggle').click();
     check(await page.locator('#mobile-menu').isVisible(), 'Mobile navigation opens');
+    await page.keyboard.press('Escape');
+    check(!await page.locator('#mobile-menu').isVisible(), 'Escape closes mobile navigation');
+    check(await page.locator('.menu-toggle').evaluate(button => button === document.activeElement), 'Escape returns keyboard focus to the menu button');
+    await page.locator('.menu-toggle').click();
     await page.locator('#mobile-menu a[href="#areas"]').click();
     check(!await page.locator('#mobile-menu').isVisible(), 'Mobile menu closes after navigation');
     await page.goto(`${baseURL}${path}?presentacion=1`);
@@ -158,9 +189,9 @@ try {
   check(galleryAxe.violations.length === 0, `Gallery accessibility: ${JSON.stringify(galleryAxe.violations.map(v => ({id:v.id,nodes:v.nodes.map(n => n.target)})))}`);
   const noJS = await browser.newPage({ javaScriptEnabled: false });
   await noJS.goto(baseURL + '/');
-    check(await noJS.locator('button[type="submit"]').isDisabled(), 'Without JavaScript, the form cannot accidentally submit data');
-    check(await noJS.locator('.contact-methods a[href="tel:+5493515307287"]').isVisible(), 'Telephone remains available without JavaScript');
-    check(await noJS.locator('.contact-methods a[href="https://wa.me/5493515307287"]').isVisible(), 'Direct WhatsApp remains available without JavaScript');
+  check(await noJS.locator('button[type="submit"]').isDisabled(), 'Without JavaScript, the form cannot accidentally submit data');
+  check(await noJS.locator('.contact-methods a[href="tel:+5493515307287"]').isVisible(), 'Telephone remains available without JavaScript');
+  check(await noJS.locator('.contact-methods a[href="https://wa.me/5493515307287"]').isVisible(), 'Direct WhatsApp remains available without JavaScript');
   check(errors.length === 0, `No browser errors: ${errors.join('; ')}`);
   console.log(`PASS ${checks} checks. No browser errors.`);
 } finally { await browser.close(); }

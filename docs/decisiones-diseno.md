@@ -41,6 +41,18 @@ El formulario prepara una consulta en WhatsApp con el área seleccionada. No se 
 
 El mapa es un enlace externo, no un recurso incrustado. No se cargan servicios de terceros al visitar la página. Las pruebas interceptan WhatsApp y simulan los endpoints para evitar envíos reales.
 
+## Refinamiento posterior
+
+- El acceso flotante utiliza el ícono de WhatsApp, no un globo de chat genérico. Su fondo verde oscuro mantiene contraste con el símbolo blanco.
+- El encabezado y la llamada principal también abren WhatsApp; el formulario sigue disponible para preparar consultas con más contexto.
+- Se aumenta la legibilidad de textos y controles, respetando la identidad azul y bronce.
+- Un resumen muestra matrícula, ubicación y docencia sin incorporar métricas ni credenciales inventadas.
+- Las áreas pasan a tarjetas separadas y el bloque académico usa un fondo azul para ganar jerarquía.
+- La navegación indica la sección actual. Escape cierra el menú móvil y devuelve el foco a su botón.
+- Los accesos flotantes respetan el área segura del dispositivo y mantienen un objetivo táctil de al menos 44 px.
+
+Las capturas de `docs/capturas/` reflejan este refinamiento. Los mockups conceptuales originales se conservan con su contexto histórico y no se presentan como la interfaz actual.
+
 ## Límites de esta entrega
 
 La información profesional procede del cliente, no de una verificación independiente de matrícula. No se inventan honorarios, disponibilidad, plazos, resultados ni antecedentes académicos. La indexación permanece bloqueada hasta definir el dominio y revisar la versión pública.
