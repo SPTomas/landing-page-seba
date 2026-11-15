@@ -22,7 +22,7 @@ const whatsappLinkProps = site.whatsapp ? { target: '_blank', rel: 'noopener nor
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#estudio">El estudio</a><a href="#areas">Áreas de práctica</a><a href="#proceso">Cómo trabajamos</a>
       </nav>
-      <a href={whatsappURL} class="nav-cta" {...whatsappLinkProps}><Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={17} /> {site.whatsapp ? 'Hablemos por WhatsApp' : 'Conversemos'}</a>
+      <a href={whatsappURL} class="nav-cta" {...whatsappLinkProps}><Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={17} /> Contactame</a>
       <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false"><span></span><span></span></button>
     </div>
     <nav id="mobile-menu" class="mobile-nav" aria-label="Navegación móvil" hidden>
@@ -38,7 +38,7 @@ const whatsappLinkProps = site.whatsapp ? { target: '_blank', rel: 'noopener nor
           <p class="hero-role">{site.profession} <span aria-hidden="true">·</span> {site.academicRole}</p>
           <h1 id="hero-title">{identity.headline.map((line, index) => <><span class:list={[index === 2 && 'accent-word']}>{index === 2 && theme !== 'grafito' ? <em>{line}</em> : line}</span>{index < 2 && <br />}</>)}</h1>
           <p class="hero-description">Cada situación tiene una historia.<br class="desktop-break" /> Te escucho, te asesoro y te acompaño con una estrategia pensada para vos.</p>
-          <div class="hero-actions"><a href={whatsappURL} class="button button-primary" {...whatsappLinkProps}>{site.whatsapp ? 'Hablemos por WhatsApp' : 'Hablemos de tu caso'} <Icon name={site.whatsapp ? 'whatsapp' : 'arrow'} size={21} /></a><a href="#areas" class="text-link">Conocé las áreas <span>↓</span></a></div>
+          <div class="hero-actions"><a href={whatsappURL} class="button button-primary" {...whatsappLinkProps}>Contame tu caso <Icon name={site.whatsapp ? 'whatsapp' : 'arrow'} size={21} /></a><a href="#areas" class="text-link">Conocé las áreas <span>↓</span></a></div>
           <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="pin" size={14} /> Cofico · Córdoba</span></div>
         </div>
         <figure class="hero-portrait">
@@ -140,9 +140,10 @@ const whatsappLinkProps = site.whatsapp ? { target: '_blank', rel: 'noopener nor
 
   <footer class="site-footer"><div class="container footer-top"><a href="#inicio" class="brand"><Mark theme={theme} /><span class="brand-name">{site.name}<small>ABOGADO</small></span></a><p>Una mirada cercana.<br /><span>Un compromiso profesional.</span></p><a href="#inicio" class="back-top" aria-label="Volver al inicio">Volver arriba <span>↑</span></a></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} {site.name}.{site.registration && ` · ${site.registration}`}</span><span>El contenido es informativo y no reemplaza una consulta profesional.</span><button type="button" class="privacy-trigger">Privacidad</button></div></footer>
 
-  <a class:list={['floating-contact', site.whatsapp && 'is-whatsapp']} href={whatsappURL} aria-label={site.whatsapp ? `Escribile a ${site.name} por WhatsApp` : 'Ir al formulario de consulta'} {...whatsappLinkProps}>
-    <span class="floating-label" aria-hidden="true">{site.whatsapp ? 'Escribime por WhatsApp' : 'Hablemos de tu consulta'}</span>
-    <Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={28} />
+  <a class:list={['floating-contact', site.whatsapp && 'is-whatsapp']} href={whatsappURL} aria-label={`¿Tenés una consulta? ${site.whatsapp ? 'Escribime por WhatsApp' : 'Contame tu caso'} · ${site.name}`} {...whatsappLinkProps}>
+    <span class="floating-icon"><Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={25} /></span>
+    <span class="floating-label"><span>¿Tenés una consulta?</span><strong>{site.whatsapp ? 'Escribime por WhatsApp' : 'Contame tu caso'}</strong></span>
+    <Icon name="arrow" class="floating-arrow" size={17} />
   </a>
   {preview && <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>}
 
