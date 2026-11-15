@@ -43,7 +43,7 @@ El mapa es un enlace externo, no un recurso incrustado. No se cargan servicios d
 
 ## Refinamiento posterior
 
-- El acceso flotante utiliza el ícono de WhatsApp, no un globo de chat genérico. Su fondo verde oscuro mantiene contraste con el símbolo blanco.
+- El acceso flotante utiliza el ícono de WhatsApp, no un globo de chat genérico. El símbolo blanco se apoya en un círculo verde oscuro dentro de una cápsula azul con borde bronce.
 - El encabezado y la llamada principal también abren WhatsApp; el formulario sigue disponible para preparar consultas con más contexto.
 - Se aumenta la legibilidad de textos y controles, respetando la identidad azul y bronce.
 - Un resumen muestra matrícula, ubicación y docencia sin incorporar métricas ni credenciales inventadas.
@@ -52,6 +52,14 @@ El mapa es un enlace externo, no un recurso incrustado. No se cargan servicios d
 - Los accesos flotantes respetan el área segura del dispositivo y mantienen un objetivo táctil de al menos 44 px.
 
 Las capturas de `docs/capturas/` reflejan este refinamiento. Los mockups conceptuales originales se conservan con su contexto histórico y no se presentan como la interfaz actual.
+
+## Llamadas de contacto
+
+El encabezado usa **“Contactame”** y la acción principal **“Contame tu caso”**, en lugar de repetir el nombre de la plataforma.
+
+El flotante muestra siempre **“¿Tenés una consulta? Escribime por WhatsApp”**: no depende de pasar el mouse. Un halo suave llama la atención durante los primeros cuatro segundos y luego se detiene; no se activa con movimiento reducido.
+
+En celular la cápsula se compacta mientras se completa el formulario y vuelve a expandirse al salir. El pie de página reserva espacio para que la invitación no cubra privacidad. No se agregan estados ficticios de disponibilidad ni promesas de respuesta inmediata.
 
 ## Límites de esta entrega
 
