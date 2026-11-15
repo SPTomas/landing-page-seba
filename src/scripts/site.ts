@@ -11,8 +11,26 @@ const setMenu = (open: boolean) => {
 };
 menuButton?.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
 mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') setMenu(false); });
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+    setMenu(false);
+    menuButton.focus();
+  }
+});
 window.matchMedia('(min-width: 1001px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+
+const sectionLinks = document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a[href^="#"], .mobile-nav a[href^="#"]');
+if ('IntersectionObserver' in window) {
+  const sectionObserver = new IntersectionObserver(entries => {
+    const current = entries.find(entry => entry.isIntersecting);
+    if (!current) return;
+    sectionLinks.forEach(link => {
+      if (link.hash === `#${current.target.id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }, { rootMargin: '-20% 0px -65% 0px' });
+  document.querySelectorAll('main > section[id]').forEach(section => sectionObserver.observe(section));
+}
 
 const serviceDialog = document.querySelector<HTMLDialogElement>('#service-dialog');
 const privacyDialog = document.querySelector<HTMLDialogElement>('#privacy-dialog');

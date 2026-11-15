@@ -9,6 +9,8 @@ const identity = themes[theme];
 const contactConfigured = Boolean(site.formEndpoint || site.whatsapp || site.email);
 const submitLabel = site.formEndpoint ? 'Enviar mi consulta' : site.whatsapp ? 'Continuar por WhatsApp' : site.email ? 'Preparar correo' : 'Preparar mi consulta';
 const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address}, Argentina`)}`;
+const whatsappURL = site.whatsapp ? `https://wa.me/${site.whatsapp}` : '#contacto';
+const whatsappLinkProps = site.whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 <Layout theme={theme} preview={preview}>
   <header class="site-header">
@@ -20,7 +22,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
       <nav class="desktop-nav" aria-label="Navegación principal">
         <a href="#estudio">El estudio</a><a href="#areas">Áreas de práctica</a><a href="#proceso">Cómo trabajamos</a>
       </nav>
-      <a href="#contacto" class="nav-cta">Conversemos <Icon name="arrow" size={15} /></a>
+      <a href={whatsappURL} class="nav-cta" {...whatsappLinkProps}><Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={17} /> {site.whatsapp ? 'Hablemos por WhatsApp' : 'Conversemos'}</a>
       <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false"><span></span><span></span></button>
     </div>
     <nav id="mobile-menu" class="mobile-nav" aria-label="Navegación móvil" hidden>
@@ -32,11 +34,11 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
     <section class="hero" id="inicio" aria-labelledby="hero-title">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="short-line"></span> Asesoramiento jurídico personalizado</p>
+          <p class="eyebrow"><span class="short-line"></span> Estudio jurídico en Córdoba</p>
           <p class="hero-role">{site.profession} <span aria-hidden="true">·</span> {site.academicRole}</p>
           <h1 id="hero-title">{identity.headline.map((line, index) => <><span class:list={[index === 2 && 'accent-word']}>{index === 2 && theme !== 'grafito' ? <em>{line}</em> : line}</span>{index < 2 && <br />}</>)}</h1>
           <p class="hero-description">Cada situación tiene una historia.<br class="desktop-break" /> Te escucho, te asesoro y te acompaño con una estrategia pensada para vos.</p>
-          <div class="hero-actions"><a href="#contacto" class="button button-primary">Hablemos de tu caso <Icon name="arrow" size={18} /></a><a href="#areas" class="text-link">Cómo puedo ayudarte <span>↓</span></a></div>
+          <div class="hero-actions"><a href={whatsappURL} class="button button-primary" {...whatsappLinkProps}>{site.whatsapp ? 'Hablemos por WhatsApp' : 'Hablemos de tu caso'} <Icon name={site.whatsapp ? 'whatsapp' : 'arrow'} size={21} /></a><a href="#areas" class="text-link">Conocé las áreas <span>↓</span></a></div>
           <div class="hero-trust"><span><Icon name="check" size={14} /> Trato directo</span><span><Icon name="pin" size={14} /> Cofico · Córdoba</span></div>
         </div>
         <figure class="hero-portrait">
@@ -47,6 +49,13 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
         </figure>
       </div>
       <div class="container hero-bottom"><span>Un enfoque humano.<span class="muted-divider"> / </span> Una respuesta profesional.</span><a href="#estudio">Conocé el estudio <Icon name="down" size={16} /></a></div>
+    </section>
+    <section class="professional-strip" aria-label="Información profesional">
+      <div class="container professional-strip-inner">
+        <div><Icon name="shield" size={24} /><p><span>Habilitación profesional</span><strong>{site.registration}</strong></p></div>
+        <div><Icon name="pin" size={24} /><p><span>El estudio</span><strong>Cofico, Córdoba</strong></p></div>
+        <div><Icon name="academic" size={26} /><p><span>Práctica & docencia</span><strong>{site.academicRole}</strong></p></div>
+      </div>
     </section>
 
     <section id="estudio" class="about section-space" aria-labelledby="about-title">
@@ -78,7 +87,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
     <section id="areas" class="services section-space" aria-labelledby="areas-title">
       <div class="container">
         <div class="section-heading"><div><p class="eyebrow">02 <span class="short-line"></span> Áreas de práctica</p><h2 id="areas-title">Lo que te importa,<br /><em>merece respaldo.</em></h2></div><p class="body-copy">Orientación y acompañamiento legal para distintas situaciones de tu vida personal y profesional.</p></div>
-        <div class="services-grid">{services.map((service, index) => <article class="service-card"><div class="service-top"><Icon name={service.icon} size={30} /><span>0{index + 1}</span></div><h3>{service.title}</h3><p>{service.description}</p><button type="button" class="service-link" data-service={service.id} aria-haspopup="dialog">Conocer el área <Icon name="arrow" size={17} /></button></article>)}</div>
+        <div class="services-grid">{services.map((service, index) => <article class="service-card"><div class="service-top"><Icon name={service.icon} size={28} /><span>0{index + 1}</span></div><h3>{service.title}</h3><p>{service.description}</p><button type="button" class="service-link" data-service={service.id} aria-label={`Conocer ${service.title}`} aria-haspopup="dialog">Conocer el área <Icon name="arrow" size={17} /></button></article>)}</div>
         <p class="areas-note">¿No encontrás el área que buscás? <a href="#contacto">Contame tu situación <span aria-hidden="true">↗</span></a></p>
       </div>
     </section>
@@ -109,7 +118,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
             {site.address && <a href={mapURL} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={22} /><span>{site.address}<small>Ver ubicación en Google Maps ↗</small></span></a>}
             {site.telephone && <a href={`tel:${site.telephone}`}><Icon name="phone" size={22} /><span>{site.phoneDisplay}<small>Llamar al estudio</small></span></a>}
             {site.email && <a href={`mailto:${site.email}`}><Icon name="mail" size={22} /><span>{site.email}<small>Enviar un correo</small></span></a>}
-            {site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer"><Icon name="chat" size={22} /><span>Escribime por WhatsApp<small>{site.phoneDisplay} · Abrir conversación ↗</small></span></a>}
+            {site.whatsapp && <a class="contact-whatsapp" href={whatsappURL} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" size={24} /><span>Escribime por WhatsApp<small>{site.phoneDisplay} · Abrir conversación ↗</small></span></a>}
           </div>
           <p class="confidential-note"><Icon name="shield" size={17} /> Tu información se trata con respeto y confidencialidad.</p>
         </div>
@@ -120,7 +129,7 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
           <label>Tu consulta <span>*</span><textarea name="mensaje" placeholder="Contame brevemente tu situación…" required minlength="10" maxlength="3000" rows="4"></textarea></label>
           <label class="consent"><input type="checkbox" name="consentimiento" required /><span>Leí la <button type="button" class="privacy-trigger">información de privacidad</button> y acepto el tratamiento de estos datos para gestionar mi consulta.</span></label>
           <div class="form-honeypot" aria-hidden="true"><label>No completar<input name="website" tabindex="-1" autocomplete="off" /></label></div>
-          <button type="submit" class="button button-form" disabled>{submitLabel} <Icon name="arrow" size={18} /></button>
+          <button type="submit" class="button button-form" disabled>{submitLabel} <Icon name={!site.formEndpoint && site.whatsapp ? 'whatsapp' : 'arrow'} size={20} /></button>
           <noscript><p class="demo-note">Activá JavaScript para preparar tu consulta, o usá los enlaces de WhatsApp, teléfono y correo del estudio.</p></noscript>
           {!contactConfigured && <p class="demo-note">Vista de propuesta: podés preparar y descargar tu consulta. El envío se habilita al configurar los datos de contacto.</p>}
           <div class="form-status" role="status" aria-live="polite"></div><a id="download-consultation" class="text-link ink-link" hidden download="consulta-sebastian-reinoso.txt">Descargar mi consulta <Icon name="download" size={17} /></a>
@@ -131,7 +140,10 @@ const mapURL = `https://www.google.com/maps/search/?api=1&query=${encodeURICompo
 
   <footer class="site-footer"><div class="container footer-top"><a href="#inicio" class="brand"><Mark theme={theme} /><span class="brand-name">{site.name}<small>ABOGADO</small></span></a><p>Una mirada cercana.<br /><span>Un compromiso profesional.</span></p><a href="#inicio" class="back-top" aria-label="Volver al inicio">Volver arriba <span>↑</span></a></div><div class="container footer-bottom"><span>© {new Date().getFullYear()} {site.name}.{site.registration && ` · ${site.registration}`}</span><span>El contenido es informativo y no reemplaza una consulta profesional.</span><button type="button" class="privacy-trigger">Privacidad</button></div></footer>
 
-  <a class="floating-contact" href={site.whatsapp ? `https://wa.me/${site.whatsapp}` : '#contacto'} aria-label={site.whatsapp ? 'Contactar por WhatsApp' : 'Ir al formulario de consulta'} {...(site.whatsapp ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><Icon name="chat" size={24} /></a>
+  <a class:list={['floating-contact', site.whatsapp && 'is-whatsapp']} href={whatsappURL} aria-label={site.whatsapp ? `Escribile a ${site.name} por WhatsApp` : 'Ir al formulario de consulta'} {...whatsappLinkProps}>
+    <span class="floating-label" aria-hidden="true">{site.whatsapp ? 'Escribime por WhatsApp' : 'Hablemos de tu consulta'}</span>
+    <Icon name={site.whatsapp ? 'whatsapp' : 'chat'} size={28} />
+  </a>
   {preview && <aside class="preview-dock" aria-label="Comparar propuestas de diseño"><a class="dock-gallery" href="/propuestas/" aria-label="Ver todas las propuestas"><span class="grid-icon" aria-hidden="true">⊞</span><span>Propuestas</span></a><span class="dock-divider"></span>{Object.entries(themes).map(([key, proposal]) => <a href={proposal.path} class:list={['theme-option', key === theme && 'selected']} aria-current={key === theme ? 'page' : undefined}><span class={`theme-dot dot-${key}`}></span><span>{proposal.number} <span class="theme-option-name">{key === 'noche' ? 'Noche' : key === 'oliva' ? 'Oliva' : 'Grafito'}</span></span></a>)}</aside>}
 
   <dialog id="service-dialog" class="site-dialog"><button type="button" class="dialog-close" aria-label="Cerrar detalle del área"><Icon name="close" size={22} /></button><p class="eyebrow">Áreas de práctica</p><h2 id="service-dialog-title"></h2><p class="dialog-description"></p><ul class="dialog-examples"></ul><a href="#contacto" class="button button-form dialog-contact">Consultar sobre esta área <Icon name="arrow" size={17} /></a><p class="dialog-disclaimer">El alcance de la intervención se confirma luego de evaluar cada caso.</p></dialog>
