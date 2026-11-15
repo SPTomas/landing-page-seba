@@ -8,7 +8,7 @@ const browser = await launchBrowser();
 try {
   for (const [name, viewport] of [
     ['escritorio', { width: 1440, height: 1080 }],
-    ['movil', { width: 390, height: 1080 }],
+    ['movil', { width: 390, height: 1280 }],
   ]) {
     const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
     const response = await page.goto(`${baseURL}/`);

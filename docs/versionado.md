@@ -7,6 +7,8 @@ El repositorio es exclusivo de `pagSeba`; no incluye el Git de carpetas superior
 1. `feat/identidad-azul-bronce`: adopción de la identidad y el retrato aprobado; comprobaciones visuales.
 2. `feat/perfil-profesional`: información confirmada, seis áreas, docencia, contacto y pruebas de WhatsApp.
 3. `docs/caso-de-estudio`: documentación, decisiones y capturas reproducibles para portfolio.
+4. `fix/apellido-reinoso`: corrección del apellido en la configuración, interfaz, metadatos, consultas, recursos y logos regenerados.
+5. `feat/pulido-web-whatsapp`: ícono de WhatsApp, accesos directos y refinamiento visual, con pruebas de teclado y adaptación.
 
 Cada rama conserva commits descriptivos (`feat`, `test`, `docs`). Las integraciones en `main` usan `git merge --no-ff`: el punto de integración queda visible sin reescribir el historial. Las ramas se publican para poder recorrer el trabajo por responsabilidad.
 

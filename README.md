@@ -16,8 +16,10 @@ Landing page para un abogado y profesor universitario de Córdoba. El proyecto p
 - Seis áreas: Civil, Comercial, Laboral, Familia, Concursos y Quiebras (Insolvencia), y Penal.
 - Detalles de cada área en ventanas accesibles, con selección automática en el formulario.
 - Dirección con enlace a Maps, teléfono, correo y WhatsApp.
+- Acceso directo a WhatsApp desde el inicio, el encabezado y un botón flotante con su ícono reconocible.
 - Formulario validado: prepara el mensaje en WhatsApp; la persona confirma el envío en esa aplicación.
 - Navegación móvil, preguntas desplegables, privacidad, foco visible y respeto por movimiento reducido.
+- Navegación con sección activa, resumen de credenciales, tarjetas independientes y campos de formulario con foco visible.
 - Fuentes autoalojadas, sin rastreadores, mapas embebidos ni backend.
 
 ## Datos proporcionados
@@ -61,7 +63,7 @@ npm test
 npm run capturas
 ```
 
-Las pruebas cubren la identidad elegida, el retrato, los datos profesionales, las seis áreas y sus ventanas, adaptación de 320 a 1440 px, menú móvil, privacidad y formularios. WhatsApp se intercepta localmente; no se envían mensajes de prueba a servicios reales. También se comprueban la descarga sin canales configurados, errores/éxito de un endpoint simulado y accesibilidad automática WCAG A/AA con axe-core. Estas comprobaciones no sustituyen una auditoría manual completa.
+Las pruebas cubren la identidad elegida, la grafía **Reinoso con i**, el retrato, los datos profesionales, las seis áreas y sus ventanas, nueve anchos de 320 a 1440 px, menú móvil, privacidad y formularios. Verifican el ícono y el clic del botón flotante, su tamaño táctil, la etiqueta por teclado y el retorno del foco al cerrar el menú. WhatsApp se intercepta localmente; no se envían mensajes de prueba a servicios reales. También se comprueban la descarga sin canales configurados, errores/éxito de un endpoint simulado y accesibilidad automática WCAG A/AA con axe-core. Última ejecución: **316 comprobaciones**, sin errores de navegador. Estas comprobaciones no sustituyen una auditoría manual completa.
 
 Las pruebas y capturas utilizan Edge o Chrome instalados. Si no hay un navegador disponible:
 
@@ -117,6 +119,8 @@ Cambios separados por responsabilidad:
 | `feat/identidad-azul-bronce` | Identidad elegida, retrato y navegación principal. |
 | `feat/perfil-profesional` | Datos confirmados, áreas, docencia, contacto y pruebas. |
 | `docs/caso-de-estudio` | Documentación del proceso y capturas para portfolio. |
+| `fix/apellido-reinoso` | Corrección del apellido, mensajes y logos vectoriales/PNG. |
+| `feat/pulido-web-whatsapp` | WhatsApp reconocible, mejoras visuales, navegación y controles táctiles. |
 
 Se integran a `main` mediante merges `--no-ff`, conservando los commits por tema. Ver [`docs/versionado.md`](docs/versionado.md).
 
